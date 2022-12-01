@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Invoice Health</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.13/dist/vue.js"></script>
+</head>
+<style>
+    .text-red {
+        color: red;
+        font-weight: bold;
+    }
+    .text-green {
+        color: green;
+        font-weight: bold;
+    }   
+</style>
+<body>
+    <div id="app"><br>
+        <div class="container">
+            <h1>{{title}}</h1><br>
+            <!-- Just using 2 fixed customer Ids for this exercise -->
+            <div class="h3 d-flex justify-content-left align-items-center">Customer ABC&nbsp;
+                <button type="button" href="#" @click.prevent="fetchInvoiceHealth(1)" class="btn btn-info btn-sm">Get Health Summary</button>
+            </div>
+            <div v-if="getIndex(1) >= 0" :set="custIndex=getIndex(1)"> 
+                <span :class="{ 'text-green': invHealths[custIndex].isHealthy == true, 'text-red': invHealths[custIndex].isHealthy == false }">{{getHealthLabel(invHealths[custIndex].isHealthy)}}</span>
+                <br><br>
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="table-dark">
+                            <th style="width: 30%">Customer Name</th>
+                            <th style="width: 30%">Issue Date</th>
+                            <th style="width: 20%">Original Amount</th>
+                            <th style="width: 20%">Outstanding Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-if="invHealths[custIndex].invoiceSummary.length > 0" v-for="invSumm in invHealths[custIndex].invoiceSummary">
+                            <td>{{invSumm.customerName}}</td>
+                            <td>{{invSumm.issueDate}}</td>
+                            <td>{{invSumm.originalAmount | toCurrency}}</td>
+                            <td>{{invSumm.outstandingAmount | toCurrency}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div><br>
+            <div class="h3 d-flex justify-content-left align-items-center">Customer XYZ&nbsp;
+                <button type="button" href="#" @click.prevent="fetchInvoiceHealth(2)" class="btn btn-info btn-sm">Get Health Summary</button>
+            </div>
+            <div v-if="getIndex(2) >= 0" :set="custIndex=getIndex(2)"> 
+                <span :class="{ 'text-green': invHealths[custIndex].isHealthy == true, 'text-red': invHealths[custIndex].isHealthy == false }">{{getHealthLabel(invHealths[custIndex].isHealthy)}}</span>
+                <br><br>
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="table-dark">
+                            <th style="width: 30%">Customer Name</th>
+                            <th style="width: 30%">Issue Date</th>
+                            <th style="width: 20%">Original Amount</th>
+                            <th style="width: 20%">Outstanding Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-if="invHealths[custIndex].invoiceSummary.length > 0" v-for="invSumm in invHealths[custIndex].invoiceSummary">
+                            <td>{{invSumm.customerName}}</td>
+                            <td>{{invSumm.issueDate}}</td>
+                            <td>{{invSumm.originalAmount | toCurrency}}</td>
+                            <td>{{invSumm.outstandingAmount | toCurrency}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div><br><br><br>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"></script>
+    <script src="./app.js"></script>
+    </body>
+</html>

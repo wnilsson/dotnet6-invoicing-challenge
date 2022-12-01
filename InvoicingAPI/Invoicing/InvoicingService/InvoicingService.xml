@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>InvoicingService</name>
+    </assembly>
+    <members>
+        <member name="T:InvoicingService.Controllers.InvoiceHealthController">
+            <summary>
+            Invoice Health API
+            </summary>
+        </member>
+        <member name="M:InvoicingService.Controllers.InvoiceHealthController.#ctor(InvoicingService.Services.IInvoiceHealthService,AutoMapper.IMapper,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.Controllers.InvoiceHealthController.GetInvoiceHealthSummary(System.Int32,System.Int32)">
+            <summary>
+            Return a customers account health info and a summary of recent invoices
+            </summary>
+        </member>
+        <member name="T:InvoicingService.Domain.Invoice">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.Domain.Invoice.#ctor">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.Domain.Invoice.#ctor(System.String,System.DateTime,System.Decimal,System.Decimal)">
+            <summary>
+            Unit testing
+            </summary>
+        </member>
+        <member name="P:InvoicingService.Domain.Invoice.CustomerName">
+            <summary>
+            Customers name
+            </summary>
+        </member>
+        <member name="P:InvoicingService.Domain.Invoice.InvoiceDate">
+            <summary>
+            Invoice Date
+            </summary>
+        </member>
+        <member name="P:InvoicingService.Domain.Invoice.OriginalAmount">
+            <summary>
+            Original invoice amount
+            </summary>
+        </member>
+        <member name="P:InvoicingService.Domain.Invoice.OutstandingAmount">
+            <summary>
+            Outstanding invoice amount
+            </summary>
+        </member>
+        <member name="T:InvoicingService.Domain.MappingConfigs.InvoiceMappingProfile">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.Domain.MappingConfigs.InvoiceMappingProfile.#ctor">
+            <summary/>
+        </member>
+        <member name="T:InvoicingService.Models.MappingConfigs.InvoiceSummaryMappingProfile">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.Models.MappingConfigs.InvoiceSummaryMappingProfile.#ctor">
+            <summary/>
+        </member>
+        <member name="T:InvoicingService.Program">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.Program.Main(System.String[])">
+            <summary/>
+        </member>
+        <member name="T:InvoicingService.RestClients.Myob.MyobClient">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.RestClients.Myob.MyobClient.#ctor(AutoMapper.IMapper)">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.RestClients.Myob.MyobClient.GetInvoiceSummaryFromDate(System.Int32,System.DateTime)">
+            <summary>
+            Get all MYOB invoices for companyId from date
+            </summary>
+        </member>
+        <member name="T:InvoicingService.RestClients.Xero.Entities.XeroInvoice">
+            <summary>
+            Using property names similar to the GET invoices summary only Xero API
+            https://api-explorer.xero.com/accounting/invoices/getinvoices?query-summaryonly=true
+            </summary>
+        </member>
+        <member name="P:InvoicingService.RestClients.Xero.Entities.XeroInvoice.InvoiceNumber">
+            <summary/>
+        </member>
+        <member name="P:InvoicingService.RestClients.Xero.Entities.XeroInvoice.CustomerId">
+            <summary/>
+        </member>
+        <member name="P:InvoicingService.RestClients.Xero.Entities.XeroInvoice.CustomerName">
+            <summary/>
+        </member>
+        <member name="P:InvoicingService.RestClients.Xero.Entities.XeroInvoice.Date">
+            <summary/>
+        </member>
+        <member name="P:InvoicingService.RestClients.Xero.Entities.XeroInvoice.AmountDue">
+            <summary/>
+        </member>
+        <member name="P:InvoicingService.RestClients.Xero.Entities.XeroInvoice.AmountPaid">
+            <summary/>
+        </member>
+        <member name="P:InvoicingService.RestClients.Xero.Entities.XeroInvoice.OriginalAmount">
+            <summary/>
+        </member>
+        <member name="T:InvoicingService.RestClients.Xero.XeroClient">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.RestClients.Xero.XeroClient.#ctor(AutoMapper.IMapper)">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.RestClients.Xero.XeroClient.GetInvoiceSummaryFromDate(System.Int32,System.DateTime)">
+            <summary>
+            Get all Xero invoices for companyId from date
+            </summary>
+        </member>
+        <member name="M:InvoicingService.RestClients.Xero.XeroClient.GetData(System.Int32)">
+            <summary>
+            This would be the API call to Xero using HttpClient but just using mocked data for this exercise
+            </summary>
+        </member>
+        <member name="T:InvoicingService.Services.IInvoiceHealthService">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.Services.IInvoiceHealthService.GetInvoicesFromDate(System.Int32,System.DateTime)">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.Services.IInvoiceHealthService.GetHealthStatus(System.Collections.Generic.List{InvoicingService.Domain.Invoice},System.Int32)">
+            <summary/>
+        </member>
+        <member name="T:InvoicingService.Services.InvoiceHealthService">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.Services.InvoiceHealthService.#ctor(AutoMapper.IMapper)">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.Services.InvoiceHealthService.#ctor(AutoMapper.IMapper,InvoicingService.RestClients.IInvoiceClient)">
+            <summary>
+            Unit testing
+            </summary>
+        </member>
+        <member name="M:InvoicingService.Services.InvoiceHealthService.GetInvoicesFromDate(System.Int32,System.DateTime)">
+            <summary>
+            Fetch all invoices from fromDate to now for customer customerId, ordered by invoice date
+            </summary>
+        </member>
+        <member name="M:InvoicingService.Services.InvoiceHealthService.GetHealthStatus(System.Collections.Generic.List{InvoicingService.Domain.Invoice},System.Int32)">
+            <summary>
+            Get the overall health status for a set of invoices
+            A healthy account is
+            - No outstanding invoice is older than 90 days
+            - the sum of invoices’ original amount is greater than 100k
+            </summary>
+        </member>
+    </members>
+</doc>
