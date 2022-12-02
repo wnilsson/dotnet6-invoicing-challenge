@@ -1,10 +1,15 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using FluentValidation.AspNetCore;
+using InvoicingService.DataAccess;
+using InvoicingService.Domain;
 using InvoicingService.Filters;
 using InvoicingService.Services;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
@@ -48,7 +53,15 @@ namespace InvoicingService
             });
 
             builder.Services.AddFluentValidationAutoValidation();
+            
             builder.Services.AddMvcCore().AddApiExplorer();
+            
+            builder.Services.AddDbContext<InvoicingDbContext>(opts =>
+            {
+                opts.UseSqlServer(builder.Configuration.GetConnectionString("InvoicingDb"));
+            });
+
+            builder.Services.AddScoped<ICompanyProviderRepository, CompanyProviderRepository>();
 
             // Inject functional 
             builder.Services.AddScoped<IInvoiceHealthService, InvoiceHealthService>();
@@ -71,7 +84,9 @@ namespace InvoicingService
             });
 
             app.UseStaticFiles();
+
             app.UseRouting();
+
             app.MapControllers();
             
             app.Run();

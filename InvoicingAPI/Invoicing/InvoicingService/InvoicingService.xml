@@ -17,8 +17,72 @@
             Return a customers account health info and a summary of recent invoices
             </summary>
         </member>
-        <member name="T:InvoicingService.Domain.Invoice">
+        <member name="T:InvoicingService.Domain.Company">
             <summary/>
+        </member>
+        <member name="P:InvoicingService.Domain.Company.Id">
+            <summary>
+            Company Id
+            </summary>
+        </member>
+        <member name="P:InvoicingService.Domain.Company.CompanyName">
+            <summary>
+            Company name
+            </summary>
+        </member>
+        <member name="P:InvoicingService.Domain.Company.CompanyContact">
+            <summary>
+            Company primary contact
+            </summary>
+        </member>
+        <member name="P:InvoicingService.Domain.Company.CompanyUrl">
+            <summary>
+            Company Url
+            </summary>
+        </member>
+        <member name="P:InvoicingService.Domain.Company.CompanyProvider">
+            <summary/>
+        </member>
+        <member name="T:InvoicingService.Domain.CompanyProvider">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.Domain.CompanyProvider.#ctor">
+            <summary/>
+        </member>
+        <member name="P:InvoicingService.Domain.CompanyProvider.Id">
+            <summary>
+            CompanyProvider Id
+            </summary>
+        </member>
+        <member name="P:InvoicingService.Domain.CompanyProvider.ClientSecret">
+            <summary>
+            Providers client secret for the associated company
+            </summary>
+        </member>
+        <member name="P:InvoicingService.Domain.CompanyProvider.IsActive">
+            <summary>
+            Flag to indicate if the company provider is active
+            </summary>
+        </member>
+        <member name="P:InvoicingService.Domain.CompanyProvider.CompanyId">
+            <summary/>
+        </member>
+        <member name="P:InvoicingService.Domain.CompanyProvider.Company">
+            <summary/>
+        </member>
+        <member name="P:InvoicingService.Domain.CompanyProvider.ProviderId">
+            <summary/>
+        </member>
+        <member name="P:InvoicingService.Domain.CompanyProvider.Provider">
+            <summary/>
+        </member>
+        <member name="T:InvoicingService.Domain.ICompanyProviderRepository">
+            <summary/>
+        </member>
+        <member name="T:InvoicingService.Domain.Invoice">
+            <summary>
+            Business domain model object
+            </summary>
         </member>
         <member name="M:InvoicingService.Domain.Invoice.#ctor">
             <summary/>
@@ -52,6 +116,27 @@
             <summary/>
         </member>
         <member name="M:InvoicingService.Domain.MappingConfigs.InvoiceMappingProfile.#ctor">
+            <summary/>
+        </member>
+        <member name="T:InvoicingService.Domain.Provider">
+            <summary/>
+        </member>
+        <member name="P:InvoicingService.Domain.Provider.Id">
+            <summary>
+            Provider Id
+            </summary>
+        </member>
+        <member name="P:InvoicingService.Domain.Provider.ProviderCode">
+            <summary>
+            Provider code
+            </summary>
+        </member>
+        <member name="P:InvoicingService.Domain.Provider.ProviderName">
+            <summary>
+            Provider name
+            </summary>
+        </member>
+        <member name="P:InvoicingService.Domain.Provider.CompanyProvider">
             <summary/>
         </member>
         <member name="T:InvoicingService.Models.MappingConfigs.InvoiceSummaryMappingProfile">
@@ -132,7 +217,7 @@
         <member name="T:InvoicingService.Services.InvoiceHealthService">
             <summary/>
         </member>
-        <member name="M:InvoicingService.Services.InvoiceHealthService.#ctor(AutoMapper.IMapper)">
+        <member name="M:InvoicingService.Services.InvoiceHealthService.#ctor(AutoMapper.IMapper,InvoicingService.Domain.ICompanyProviderRepository)">
             <summary/>
         </member>
         <member name="M:InvoicingService.Services.InvoiceHealthService.#ctor(AutoMapper.IMapper,InvoicingService.RestClients.IInvoiceClient)">

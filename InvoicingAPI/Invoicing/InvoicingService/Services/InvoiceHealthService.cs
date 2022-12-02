@@ -13,11 +13,13 @@ namespace InvoicingService.Services
     {
         private readonly IMapper _mapper;
         private IInvoiceClient _invoiceClient;
+        private readonly ICompanyProviderRepository _repository;
 
         /// <summary/>
-        public InvoiceHealthService(IMapper mapper)
+        public InvoiceHealthService(IMapper mapper, ICompanyProviderRepository repository)
         {
             _mapper = mapper;
+            _repository = repository;
         }
 
         /// <summary>
@@ -34,8 +36,12 @@ namespace InvoicingService.Services
         /// </summary>
         public Task<List<Invoice>> GetInvoicesFromDate(int customerId, DateTime fromDate)
         {
-            // ToDo - fetch the provider Id from DB using customerId
-            _invoiceClient ??= InvoiceClientFactory.GetInstance("XERO", _mapper);
+            if (_invoiceClient == null)
+            {
+                // Get the company provider
+                var companyProvider = _repository.SingleOrDefaultAsync(x => x.Provider, y => y.CompanyId == customerId).Result;
+                _invoiceClient = InvoiceClientFactory.GetInstance(companyProvider.Provider.ProviderCode, _mapper);
+            }
 
             return _invoiceClient.GetInvoiceSummaryFromDate(customerId, fromDate);
         }

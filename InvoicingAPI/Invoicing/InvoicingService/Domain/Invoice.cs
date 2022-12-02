@@ -2,7 +2,9 @@
 
 namespace InvoicingService.Domain
 {
-    /// <summary/>
+    /// <summary>
+    /// Business domain model object
+    /// </summary>
     public class Invoice
     {
         /// <summary/>
