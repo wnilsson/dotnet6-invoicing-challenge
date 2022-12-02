@@ -9,7 +9,7 @@ namespace InvoicingService.Services
     public interface IInvoiceHealthService
     {
         /// <summary/>
-        Task<List<Invoice>> GetInvoicesFromDate(int customerId, DateTime fromDate);
+        Task<List<Invoice>> GetInvoicesFromDate(int customerId, DateTime fromDate, string providerCode);
 
         /// <summary/>
         bool GetHealthStatus(List<Invoice> invoices, int healthPeriodDays);

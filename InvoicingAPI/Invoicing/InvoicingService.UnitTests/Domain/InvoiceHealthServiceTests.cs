@@ -16,6 +16,8 @@ namespace InvoicingService.UnitTests.Domain
     public class InvoiceHealthServiceTests
     {
         private readonly IMapper _mapper;
+        private const string ProviderCode = "XERO";
+        private static readonly DateTime FromDate = DateTime.Now.AddMonths(-6);
 
         public InvoiceHealthServiceTests()
         {
@@ -27,9 +29,8 @@ namespace InvoicingService.UnitTests.Domain
         [Test]
         public void HealthyTest_Customer1()
         {
-            var fromDate = DateTime.Now.AddMonths(-6);
             var mockServiceClient = new Mock<IInvoiceClient>();
-            mockServiceClient.Setup(x => x.GetInvoiceSummaryFromDate(1, fromDate))
+            mockServiceClient.Setup(x => x.GetInvoiceSummaryFromDate(1, FromDate))
                 .Returns(Task.Run(() => new List<Invoice>
                 {
                     new("fred", DateTime.Now, 100000, 0),
@@ -37,14 +38,13 @@ namespace InvoicingService.UnitTests.Domain
                 }));
 
             IInvoiceHealthService service = new InvoiceHealthService(_mapper, mockServiceClient.Object);
-
-            var invoices = service.GetInvoicesFromDate(1, fromDate).Result;
+            var invoices = service.GetInvoicesFromDate(1, FromDate, ProviderCode).Result;
 
             Assert.IsNotEmpty(invoices);
             // All properties should have data
             Assert.IsTrue(invoices.All(x => x.InvoiceDate != DateTime.MinValue && !string.IsNullOrEmpty(x.CustomerName) && x.OriginalAmount > 0));
             // None should be older than 6 months
-            Assert.IsFalse(invoices.Any(x => x.InvoiceDate < fromDate));
+            Assert.IsFalse(invoices.Any(x => x.InvoiceDate < FromDate));
             // Company 1 should be healthy 
             Assert.IsTrue(service.GetHealthStatus(invoices, 90));
         }
@@ -52,9 +52,8 @@ namespace InvoicingService.UnitTests.Domain
         [Test]
         public void UnHealthyOldUnpaidInvoiceTest_Customer2()
         {
-            var fromDate = DateTime.Now.AddMonths(-6);
             var mockServiceClient = new Mock<IInvoiceClient>();
-            mockServiceClient.Setup(x => x.GetInvoiceSummaryFromDate(2, fromDate))
+            mockServiceClient.Setup(x => x.GetInvoiceSummaryFromDate(2, FromDate))
                 .Returns(Task.Run(() => new List<Invoice>
                 {
                     new("fred", DateTime.Now, 100000, 0),
@@ -62,11 +61,11 @@ namespace InvoicingService.UnitTests.Domain
                 }));
 
             IInvoiceHealthService service = new InvoiceHealthService(_mapper, mockServiceClient.Object);
+            var invoices = service.GetInvoicesFromDate(2, FromDate, ProviderCode).Result;
 
-            var invoices = service.GetInvoicesFromDate(2, fromDate).Result;
             Assert.IsNotEmpty(invoices);
             // None should be older than 6 months
-            Assert.IsFalse(invoices.Any(x => x.InvoiceDate < fromDate));
+            Assert.IsFalse(invoices.Any(x => x.InvoiceDate < FromDate));
             // Company 2 should be unhealthy 
             Assert.IsFalse(service.GetHealthStatus(invoices, 90));
         }
@@ -74,9 +73,8 @@ namespace InvoicingService.UnitTests.Domain
         [Test]
         public void UnHealthySumLessThan100KTest_Customer3()
         {
-            var fromDate = DateTime.Now.AddMonths(-6);
             var mockServiceClient = new Mock<IInvoiceClient>();
-            mockServiceClient.Setup(x => x.GetInvoiceSummaryFromDate(3, fromDate))
+            mockServiceClient.Setup(x => x.GetInvoiceSummaryFromDate(3, FromDate))
                 .Returns(Task.Run(() => new List<Invoice>
                 {
                     new("fred", DateTime.Now, 50000, 0),
@@ -84,11 +82,11 @@ namespace InvoicingService.UnitTests.Domain
                 }));
 
             IInvoiceHealthService service = new InvoiceHealthService(_mapper, mockServiceClient.Object);
+            var invoices = service.GetInvoicesFromDate(3, FromDate, ProviderCode).Result;
 
-            var invoices = service.GetInvoicesFromDate(3, fromDate).Result;
             Assert.IsNotEmpty(invoices);
             // None should be older than 6 months
-            Assert.IsFalse(invoices.Any(x => x.InvoiceDate < fromDate));
+            Assert.IsFalse(invoices.Any(x => x.InvoiceDate < FromDate));
             // Company 3 should be unhealthy 
             Assert.IsFalse(service.GetHealthStatus(invoices, 90));
         }

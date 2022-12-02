@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Infrastructure.Core.Models;
 
 namespace InvoicingService.Domain
 {
     /// <summary/>
-    public class Provider
+    public class Provider : IAggregateRoot
     {
         /// <summary>
         /// Provider Id

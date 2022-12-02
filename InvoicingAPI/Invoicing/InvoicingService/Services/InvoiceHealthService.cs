@@ -13,13 +13,11 @@ namespace InvoicingService.Services
     {
         private readonly IMapper _mapper;
         private IInvoiceClient _invoiceClient;
-        private readonly ICompanyProviderRepository _repository;
-
+        
         /// <summary/>
-        public InvoiceHealthService(IMapper mapper, ICompanyProviderRepository repository)
+        public InvoiceHealthService(IMapper mapper)
         {
             _mapper = mapper;
-            _repository = repository;
         }
 
         /// <summary>
@@ -34,14 +32,9 @@ namespace InvoicingService.Services
         /// <summary>
         /// Fetch all invoices from fromDate to now for customer customerId, ordered by invoice date
         /// </summary>
-        public Task<List<Invoice>> GetInvoicesFromDate(int customerId, DateTime fromDate)
+        public Task<List<Invoice>> GetInvoicesFromDate(int customerId, DateTime fromDate, string providerCode)
         {
-            if (_invoiceClient == null)
-            {
-                // Get the company provider
-                var companyProvider = _repository.SingleOrDefaultAsync(x => x.Provider, y => y.CompanyId == customerId).Result;
-                _invoiceClient = InvoiceClientFactory.GetInstance(companyProvider.Provider.ProviderCode, _mapper);
-            }
+            _invoiceClient ??= InvoiceClientFactory.GetInstance(providerCode, _mapper);
 
             return _invoiceClient.GetInvoiceSummaryFromDate(customerId, fromDate);
         }

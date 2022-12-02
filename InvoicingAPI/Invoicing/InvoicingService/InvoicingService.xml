@@ -5,11 +5,9 @@
     </assembly>
     <members>
         <member name="T:InvoicingService.Controllers.InvoiceHealthController">
-            <summary>
-            Invoice Health API
-            </summary>
+            <summary/>
         </member>
-        <member name="M:InvoicingService.Controllers.InvoiceHealthController.#ctor(InvoicingService.Services.IInvoiceHealthService,AutoMapper.IMapper,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:InvoicingService.Controllers.InvoiceHealthController.#ctor(InvoicingService.Services.IInvoiceHealthService,InvoicingService.Domain.ICompanyProviderRepository,AutoMapper.IMapper,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary/>
         </member>
         <member name="M:InvoicingService.Controllers.InvoiceHealthController.GetInvoiceHealthSummary(System.Int32,System.Int32)">
@@ -208,7 +206,7 @@
         <member name="T:InvoicingService.Services.IInvoiceHealthService">
             <summary/>
         </member>
-        <member name="M:InvoicingService.Services.IInvoiceHealthService.GetInvoicesFromDate(System.Int32,System.DateTime)">
+        <member name="M:InvoicingService.Services.IInvoiceHealthService.GetInvoicesFromDate(System.Int32,System.DateTime,System.String)">
             <summary/>
         </member>
         <member name="M:InvoicingService.Services.IInvoiceHealthService.GetHealthStatus(System.Collections.Generic.List{InvoicingService.Domain.Invoice},System.Int32)">
@@ -217,7 +215,7 @@
         <member name="T:InvoicingService.Services.InvoiceHealthService">
             <summary/>
         </member>
-        <member name="M:InvoicingService.Services.InvoiceHealthService.#ctor(AutoMapper.IMapper,InvoicingService.Domain.ICompanyProviderRepository)">
+        <member name="M:InvoicingService.Services.InvoiceHealthService.#ctor(AutoMapper.IMapper)">
             <summary/>
         </member>
         <member name="M:InvoicingService.Services.InvoiceHealthService.#ctor(AutoMapper.IMapper,InvoicingService.RestClients.IInvoiceClient)">
@@ -225,7 +223,7 @@
             Unit testing
             </summary>
         </member>
-        <member name="M:InvoicingService.Services.InvoiceHealthService.GetInvoicesFromDate(System.Int32,System.DateTime)">
+        <member name="M:InvoicingService.Services.InvoiceHealthService.GetInvoicesFromDate(System.Int32,System.DateTime,System.String)">
             <summary>
             Fetch all invoices from fromDate to now for customer customerId, ordered by invoice date
             </summary>

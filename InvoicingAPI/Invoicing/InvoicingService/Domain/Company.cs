@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+using Infrastructure.Core.Models;
 
 namespace InvoicingService.Domain
 {
     /// <summary/>
-    public class Company 
+    public class Company : IAggregateRoot
     {
         /// <summary>
         /// Company Id
