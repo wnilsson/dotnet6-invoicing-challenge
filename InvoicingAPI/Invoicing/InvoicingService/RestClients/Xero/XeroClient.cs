@@ -22,33 +22,30 @@ namespace InvoicingService.RestClients.Xero
         /// <summary>
         /// Get all Xero invoices for companyId from date
         /// </summary>
-        public Task<List<Invoice>> GetInvoiceSummaryFromDate(int companyId, DateTime fromDate)
+        public async Task<List<Invoice>> GetInvoiceSummaryFromDate(int companyId, DateTime fromDate)
         {
             var response = new List<Invoice>();
 
             // Just return filtered mock data using the dictionary for this exercise
-            return Task.Run(() =>
+            var data = await GetData(companyId);
+            if (data != null)
             {
-                var data = GetData(companyId);
-                if (data != null)
-                {
-                    response = data
-                        .Where(x => x.Date >= fromDate)
-                        .Select(x => _mapper.Map<Invoice>(x))
-                        .OrderBy(x => x.InvoiceDate)
-                        .ToList();
-                }
+                response = data
+                    .Where(x => x.Date >= fromDate)
+                    .Select(x => _mapper.Map<Invoice>(x))
+                    .OrderBy(x => x.InvoiceDate)
+                    .ToList();
+            }
 
-                return response;
-            });
+            return response;
         }
 
         /// <summary>
-        /// This would be the API call to Xero using HttpClient but just using mocked data for this exercise
+        /// This would be the async API call to Xero using HttpClient but just using mocked data for this exercise
         /// </summary>
-        private static List<XeroInvoice> GetData(int companyId)
+        private Task<List<XeroInvoice>> GetData(int companyId)
         {
-            return XeroMockData.Data.ContainsKey(companyId) ? XeroMockData.Data[companyId].ToList() : null;
+            return Task.Run(() => XeroMockData.Data.ContainsKey(companyId) ? XeroMockData.Data[companyId].ToList() : null);
         }
     }
 }

@@ -200,7 +200,7 @@
         </member>
         <member name="M:InvoicingService.RestClients.Xero.XeroClient.GetData(System.Int32)">
             <summary>
-            This would be the API call to Xero using HttpClient but just using mocked data for this exercise
+            This would be the async API call to Xero using HttpClient but just using mocked data for this exercise
             </summary>
         </member>
         <member name="T:InvoicingService.Services.IInvoiceHealthService">
