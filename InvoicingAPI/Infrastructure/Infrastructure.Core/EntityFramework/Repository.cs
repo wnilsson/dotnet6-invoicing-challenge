@@ -31,32 +31,31 @@ namespace Infrastructure.Core.EntityFramework
         public virtual void Update(TEntity entity)
         {
             _dbSet.Update(entity);
-
         }
 
-        public async Task<TEntity> GetByIdAsync(object id)
+        public ValueTask<TEntity> GetByIdAsync(object id)
         {
-            return await _dbSet.FindAsync(id).ConfigureAwait(false);
+            return _dbSet.FindAsync(id);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync()
+        public Task<List<TEntity>> GetAllAsync()
         {
-            return await _dbSet.ToListAsync().ConfigureAwait(false);
+            return _dbSet.ToListAsync();
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync<TProperty>(Expression<Func<TEntity, TProperty>> include)
+        public Task<List<TEntity>> GetAllAsync<TProperty>(Expression<Func<TEntity, TProperty>> include)
         {
-            return await _dbSet.Include(include).ToListAsync().ConfigureAwait(false);
+            return _dbSet.Include(include).ToListAsync();
         }
 
-        public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        public Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return await _dbSet.SingleOrDefaultAsync(predicate).ConfigureAwait(false);
+            return _dbSet.SingleOrDefaultAsync(predicate);
         }
 
-        public async Task<TEntity> SingleOrDefaultAsync<TProperty>(Expression<Func<TEntity, TProperty>> include, Expression<Func<TEntity, bool>> predicate)
+        public Task<TEntity> SingleOrDefaultAsync<TProperty>(Expression<Func<TEntity, TProperty>> include, Expression<Func<TEntity, bool>> predicate)
         {
-            return await _dbSet.Include(include).SingleOrDefaultAsync(predicate).ConfigureAwait(false);
+            return _dbSet.Include(include).SingleOrDefaultAsync(predicate);
         }
     }
 }

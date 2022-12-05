@@ -7,7 +7,7 @@
         <member name="T:InvoicingService.Controllers.InvoiceHealthController">
             <summary/>
         </member>
-        <member name="M:InvoicingService.Controllers.InvoiceHealthController.#ctor(InvoicingService.Services.IInvoiceHealthService,InvoicingService.Domain.ICompanyProviderRepository,AutoMapper.IMapper,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:InvoicingService.Controllers.InvoiceHealthController.#ctor(InvoicingService.Domain.ICompanyProviderRepository,InvoicingService.RestClients.IInvoiceClientFactory,AutoMapper.IMapper,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary/>
         </member>
         <member name="M:InvoicingService.Controllers.InvoiceHealthController.GetInvoiceHealthSummaryAsync(System.Int32,System.Int32)">
@@ -137,6 +137,17 @@
         <member name="P:InvoicingService.Domain.Provider.CompanyProvider">
             <summary/>
         </member>
+        <member name="T:InvoicingService.Extensions.InvoiceExtensions">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.Extensions.InvoiceExtensions.GetHealthStatus(System.Collections.Generic.List{InvoicingService.Domain.Invoice},System.Int32)">
+            <summary>
+            Get the overall health status for a set of invoices
+            A healthy account is
+            - No outstanding invoice is older than 90 days
+            - the sum of invoices’ original amount is greater than 100k
+            </summary>
+        </member>
         <member name="T:InvoicingService.Models.MappingConfigs.InvoiceSummaryMappingProfile">
             <summary/>
         </member>
@@ -148,6 +159,14 @@
         </member>
         <member name="M:InvoicingService.Program.Main(System.String[])">
             <summary/>
+        </member>
+        <member name="T:InvoicingService.RestClients.IInvoiceClientFactory">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.RestClients.InvoiceClientFactory.GetInstance(System.String,AutoMapper.IMapper)">
+            <summary>
+            Returns an invoice client based on provider code
+            </summary>
         </member>
         <member name="T:InvoicingService.RestClients.Myob.MyobClient">
             <summary/>
@@ -201,39 +220,6 @@
         <member name="M:InvoicingService.RestClients.Xero.XeroClient.GetData(System.Int32)">
             <summary>
             This would be the async API call to Xero using HttpClient but just using mocked data for this exercise
-            </summary>
-        </member>
-        <member name="T:InvoicingService.Services.IInvoiceHealthService">
-            <summary/>
-        </member>
-        <member name="M:InvoicingService.Services.IInvoiceHealthService.GetInvoicesFromDate(System.Int32,System.DateTime,System.String)">
-            <summary/>
-        </member>
-        <member name="M:InvoicingService.Services.IInvoiceHealthService.GetHealthStatus(System.Collections.Generic.List{InvoicingService.Domain.Invoice},System.Int32)">
-            <summary/>
-        </member>
-        <member name="T:InvoicingService.Services.InvoiceHealthService">
-            <summary/>
-        </member>
-        <member name="M:InvoicingService.Services.InvoiceHealthService.#ctor(AutoMapper.IMapper)">
-            <summary/>
-        </member>
-        <member name="M:InvoicingService.Services.InvoiceHealthService.#ctor(AutoMapper.IMapper,InvoicingService.RestClients.IInvoiceClient)">
-            <summary>
-            Unit testing
-            </summary>
-        </member>
-        <member name="M:InvoicingService.Services.InvoiceHealthService.GetInvoicesFromDate(System.Int32,System.DateTime,System.String)">
-            <summary>
-            Fetch all invoices from fromDate to now for customer customerId, ordered by invoice date
-            </summary>
-        </member>
-        <member name="M:InvoicingService.Services.InvoiceHealthService.GetHealthStatus(System.Collections.Generic.List{InvoicingService.Domain.Invoice},System.Int32)">
-            <summary>
-            Get the overall health status for a set of invoices
-            A healthy account is
-            - No outstanding invoice is older than 90 days
-            - the sum of invoices’ original amount is greater than 100k
             </summary>
         </member>
     </members>

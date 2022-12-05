@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using InvoicingService.Api.Models;
 using InvoicingService.Domain;
-using InvoicingService.Services;
+using InvoicingService.Extensions;
+using InvoicingService.RestClients;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -17,20 +18,17 @@ namespace InvoicingService.Controllers
     [Route("api/[controller]")]
     public class InvoiceHealthController : ControllerBase
     {
-        private readonly IInvoiceHealthService _invoiceHealthService;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
         private readonly ICompanyProviderRepository _repository;
+        private readonly IInvoiceClientFactory _invoiceClientFactory;
 
         /// <summary/>
-        public InvoiceHealthController(
-            IInvoiceHealthService healthService,
-            ICompanyProviderRepository repository,
-            IMapper mapper,
-            IConfiguration configuration)
+        public InvoiceHealthController(ICompanyProviderRepository repository, IInvoiceClientFactory invoiceClientFactory, 
+            IMapper mapper, IConfiguration configuration)
         {
-            _invoiceHealthService = healthService;
             _repository = repository;
+            _invoiceClientFactory = invoiceClientFactory;
             _mapper = mapper;
             _configuration = configuration;
         }
@@ -40,27 +38,27 @@ namespace InvoicingService.Controllers
         /// </summary>
         [HttpGet]
         [Route("{customerId}/take/{take}")]
-        public async Task<IActionResult> GetInvoiceHealthSummaryAsync(int customerId, int take = 10)
+        public async Task<ActionResult<InvoiceHealthViewModel>> GetInvoiceHealthSummaryAsync(int customerId, int take = 10)
         {
+            var fromDate = DateTime.Now.AddMonths(-Convert.ToInt32(_configuration["InvoicePeriodMonths"]));
+            var healthPeriodDays = Convert.ToInt32(_configuration["InvoiceHealthPeriodDays"]);
+
             // Get the provider code for customerId
-            var companyProvider = await _repository.SingleOrDefaultAsync(x => x.Provider, y => y.CompanyId == customerId);
+            var companyProvider = await _repository.SingleOrDefaultAsync(x => x.Provider, y => y.CompanyId == customerId).ConfigureAwait(false);
             if (companyProvider == null) return BadRequest($"Provider not found for customerId {customerId}");
 
             // Get an invoice summary via the customers 3rd party provider for a date period
-            var fromDate = DateTime.Now.AddMonths(-Convert.ToInt32(_configuration["InvoicePeriodMonths"]));
-            List <Invoice> invoices = await _invoiceHealthService.GetInvoicesFromDate(customerId, fromDate, companyProvider.Provider.ProviderCode);
+            var invoiceClient = _invoiceClientFactory.GetInstance(companyProvider.Provider.ProviderCode, _mapper);
+            List<Invoice> invoices = await invoiceClient.GetInvoiceSummaryFromDateAsync(customerId, fromDate).ConfigureAwait(false);
             if (invoices.Count == 0) return NotFound();
 
             var response = new InvoiceHealthViewModel
             {
                 CustomerId = customerId,
                 // Set the health flag of the customers accounts
-                IsHealthy = _invoiceHealthService.GetHealthStatus(invoices, Convert.ToInt32(_configuration["InvoiceHealthPeriodDays"])),
+                IsHealthy = invoices.GetHealthStatus(healthPeriodDays),
                 // Get the recent invoice summary results, ordered descending
-                InvoiceSummary = invoices
-                    .OrderByDescending(x => x.InvoiceDate)
-                    .Take(take)
-                    .Select(x => _mapper.Map<InvoiceSummaryItemViewModel>(x))
+                InvoiceSummary = invoices.OrderByDescending(x => x.InvoiceDate).Take(take).Select(x => _mapper.Map<InvoiceSummaryItemViewModel>(x))
             };
 
             return Ok(response);

@@ -27,7 +27,7 @@ namespace InvoicingService.RestClients.Xero
             var response = new List<Invoice>();
 
             // Just return filtered mock data using the dictionary for this exercise
-            var data = await GetData(companyId);
+            var data = await GetData(companyId).ConfigureAwait(false);
             if (data != null)
             {
                 response = data

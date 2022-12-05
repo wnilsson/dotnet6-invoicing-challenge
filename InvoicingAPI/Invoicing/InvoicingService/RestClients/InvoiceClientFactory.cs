@@ -5,11 +5,20 @@ using InvoicingService.RestClients.Xero;
 
 namespace InvoicingService.RestClients
 {
-    public class InvoiceClientFactory
+    /// <summary/>
+    public interface IInvoiceClientFactory
     {
-        internal static IInvoiceClient GetInstance(string provider, IMapper mapper)
+        IInvoiceClient GetInstance(string providerCode, IMapper mapper);
+    }
+
+    public class InvoiceClientFactory : IInvoiceClientFactory
+    {
+        /// <summary>
+        /// Returns an invoice client based on provider code
+        /// </summary>
+        public IInvoiceClient GetInstance(string providerCode, IMapper mapper)
         {
-            switch (provider)
+            switch (providerCode)
             {
                 case "XERO": return new XeroClient(mapper);
                 case "MYOB": return new MyobClient(mapper);

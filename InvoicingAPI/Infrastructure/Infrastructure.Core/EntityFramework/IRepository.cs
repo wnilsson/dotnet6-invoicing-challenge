@@ -14,11 +14,11 @@ namespace Infrastructure.Core.EntityFramework
 
         void Update(TEntity entity);
         
-        Task<TEntity> GetByIdAsync(object id);
+        ValueTask<TEntity> GetByIdAsync(object id);
         
-        Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<List<TEntity>> GetAllAsync();
 
-        Task<IEnumerable<TEntity>> GetAllAsync<TProperty>(Expression<Func<TEntity, TProperty>> include);
+        Task<List<TEntity>> GetAllAsync<TProperty>(Expression<Func<TEntity, TProperty>> include);
 
         Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
 

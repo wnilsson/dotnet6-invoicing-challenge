@@ -1,13 +1,15 @@
 using System;
 using System.IO;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using FluentValidation.AspNetCore;
 using InvoicingService.DataAccess;
 using InvoicingService.Domain;
 using InvoicingService.Filters;
-using InvoicingService.Services;
+using InvoicingService.RestClients;
+using InvoicingService.RestClients.Myob;
+using InvoicingService.RestClients.Xero;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -62,11 +64,8 @@ namespace InvoicingService
             });
 
             builder.Services.AddScoped<ICompanyProviderRepository, CompanyProviderRepository>();
-
-            // Inject functional 
-            builder.Services.AddScoped<IInvoiceHealthService, InvoiceHealthService>();
-            // ToDo inject EF and repo
-
+            builder.Services.AddSingleton<IInvoiceClientFactory, InvoiceClientFactory>();
+            
             // Scan these assemblies for auto mapper profiles
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
             
