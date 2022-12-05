@@ -8,13 +8,11 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace InvoicingService.Filters
 {
-    public class ExceptionHandlerFilter : IActionFilter, IOrderedFilter
+    public class ExceptionHandlerFilter : IExceptionFilter, IOrderedFilter
     {
         public int Order => int.MaxValue - 10;
 
-        public void OnActionExecuting(ActionExecutingContext context) { }
-
-        public void OnActionExecuted(ActionExecutedContext context)
+        public void OnException(ExceptionContext context)
         {
             if (context.Exception is BaseException exception)
             {
@@ -24,10 +22,8 @@ namespace InvoicingService.Filters
                 dictionary.Keys.Append("errors");
                 context.Result = new BadRequestObjectResult(dictionary);
                 context.ExceptionHandled = true;
-
-                return;
             }
-            
+
             if (context.Exception is Exception)
             {
                 context.Result = new StatusCodeResult(StatusCodes.Status500InternalServerError);
