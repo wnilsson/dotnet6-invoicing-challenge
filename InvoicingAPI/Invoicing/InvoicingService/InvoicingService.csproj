@@ -28,5 +28,11 @@
     <ProjectReference Include="..\InvoicingService.Api\InvoicingService.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="InvoicingService.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 
 </Project>
