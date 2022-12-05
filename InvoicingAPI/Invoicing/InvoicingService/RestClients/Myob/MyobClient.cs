@@ -20,7 +20,7 @@ namespace InvoicingService.RestClients.Myob
         /// <summary>
         /// Get all MYOB invoices for companyId from date
         /// </summary>
-        public Task<List<Invoice>> GetInvoiceSummaryFromDate(int companyId, DateTime fromDate)
+        public Task<List<Invoice>> GetInvoiceSummaryFromDateAsync(int companyId, DateTime fromDate)
         {
             throw new NotImplementedException();
         }

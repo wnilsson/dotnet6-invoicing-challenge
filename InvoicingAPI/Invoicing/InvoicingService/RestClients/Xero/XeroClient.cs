@@ -22,7 +22,7 @@ namespace InvoicingService.RestClients.Xero
         /// <summary>
         /// Get all Xero invoices for companyId from date
         /// </summary>
-        public async Task<List<Invoice>> GetInvoiceSummaryFromDate(int companyId, DateTime fromDate)
+        public async Task<List<Invoice>> GetInvoiceSummaryFromDateAsync(int companyId, DateTime fromDate)
         {
             var response = new List<Invoice>();
 

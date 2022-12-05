@@ -40,7 +40,7 @@ namespace InvoicingService.Controllers
         /// </summary>
         [HttpGet]
         [Route("{customerId}/take/{take}")]
-        public async Task<IActionResult> GetInvoiceHealthSummary(int customerId, int take = 10)
+        public async Task<IActionResult> GetInvoiceHealthSummaryAsync(int customerId, int take = 10)
         {
             // Get the provider code for customerId
             var companyProvider = await _repository.SingleOrDefaultAsync(x => x.Provider, y => y.CompanyId == customerId);

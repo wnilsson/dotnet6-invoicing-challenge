@@ -10,7 +10,7 @@
         <member name="M:InvoicingService.Controllers.InvoiceHealthController.#ctor(InvoicingService.Services.IInvoiceHealthService,InvoicingService.Domain.ICompanyProviderRepository,AutoMapper.IMapper,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary/>
         </member>
-        <member name="M:InvoicingService.Controllers.InvoiceHealthController.GetInvoiceHealthSummary(System.Int32,System.Int32)">
+        <member name="M:InvoicingService.Controllers.InvoiceHealthController.GetInvoiceHealthSummaryAsync(System.Int32,System.Int32)">
             <summary>
             Return a customers account health info and a summary of recent invoices
             </summary>
@@ -155,7 +155,7 @@
         <member name="M:InvoicingService.RestClients.Myob.MyobClient.#ctor(AutoMapper.IMapper)">
             <summary/>
         </member>
-        <member name="M:InvoicingService.RestClients.Myob.MyobClient.GetInvoiceSummaryFromDate(System.Int32,System.DateTime)">
+        <member name="M:InvoicingService.RestClients.Myob.MyobClient.GetInvoiceSummaryFromDateAsync(System.Int32,System.DateTime)">
             <summary>
             Get all MYOB invoices for companyId from date
             </summary>
@@ -193,7 +193,7 @@
         <member name="M:InvoicingService.RestClients.Xero.XeroClient.#ctor(AutoMapper.IMapper)">
             <summary/>
         </member>
-        <member name="M:InvoicingService.RestClients.Xero.XeroClient.GetInvoiceSummaryFromDate(System.Int32,System.DateTime)">
+        <member name="M:InvoicingService.RestClients.Xero.XeroClient.GetInvoiceSummaryFromDateAsync(System.Int32,System.DateTime)">
             <summary>
             Get all Xero invoices for companyId from date
             </summary>

@@ -7,6 +7,6 @@ namespace InvoicingService.RestClients
 {
     public interface IInvoiceClient
     {
-        Task<List<Invoice>> GetInvoiceSummaryFromDate(int companyId, DateTime fromDate);
+        Task<List<Invoice>> GetInvoiceSummaryFromDateAsync(int companyId, DateTime fromDate);
     }
 }

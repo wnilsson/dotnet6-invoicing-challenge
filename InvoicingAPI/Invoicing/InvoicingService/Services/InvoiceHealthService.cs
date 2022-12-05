@@ -36,7 +36,7 @@ namespace InvoicingService.Services
         {
             _invoiceClient ??= InvoiceClientFactory.GetInstance(providerCode, _mapper);
 
-            return _invoiceClient.GetInvoiceSummaryFromDate(customerId, fromDate);
+            return _invoiceClient.GetInvoiceSummaryFromDateAsync(customerId, fromDate);
         }
 
         /// <summary>

@@ -30,7 +30,7 @@ namespace InvoicingService.UnitTests.Domain
         public void HealthyTest_Customer1()
         {
             var mockServiceClient = new Mock<IInvoiceClient>();
-            mockServiceClient.Setup(x => x.GetInvoiceSummaryFromDate(1, FromDate))
+            mockServiceClient.Setup(x => x.GetInvoiceSummaryFromDateAsync(1, FromDate))
                 .Returns(Task.Run(() => new List<Invoice>
                 {
                     new("fred", DateTime.Now, 100000, 0),
@@ -53,7 +53,7 @@ namespace InvoicingService.UnitTests.Domain
         public void UnHealthyOldUnpaidInvoiceTest_Customer2()
         {
             var mockServiceClient = new Mock<IInvoiceClient>();
-            mockServiceClient.Setup(x => x.GetInvoiceSummaryFromDate(2, FromDate))
+            mockServiceClient.Setup(x => x.GetInvoiceSummaryFromDateAsync(2, FromDate))
                 .Returns(Task.Run(() => new List<Invoice>
                 {
                     new("fred", DateTime.Now, 100000, 0),
@@ -74,7 +74,7 @@ namespace InvoicingService.UnitTests.Domain
         public void UnHealthySumLessThan100KTest_Customer3()
         {
             var mockServiceClient = new Mock<IInvoiceClient>();
-            mockServiceClient.Setup(x => x.GetInvoiceSummaryFromDate(3, FromDate))
+            mockServiceClient.Setup(x => x.GetInvoiceSummaryFromDateAsync(3, FromDate))
                 .Returns(Task.Run(() => new List<Invoice>
                 {
                     new("fred", DateTime.Now, 50000, 0),
