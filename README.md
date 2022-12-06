@@ -1,5 +1,5 @@
 ## Summary
-This started as the basic coding challenge below but has evolved to a bigger solution where I can investigate various .Net core (6) Web Api features, patterns etc.
+This started as the basic coding challenge below but has evolved to a bigger solution where I can develop various .Net 6 Web Api features, patterns etc.
 
 #### The Challenge
 Assume currently, we require our customers to provide their financial data for risk evaluation purpose every 6 months via email. We would like to speed up this process by connecting to their accounting software and pull down their sales records. 
