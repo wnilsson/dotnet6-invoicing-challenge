@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using InvoicingService.Domain;
+using InvoicingService.Domain.Models;
 
 namespace InvoicingService.RestClients.Myob
 {

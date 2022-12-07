@@ -1,6 +1,6 @@
-﻿using InvoicingService.Domain;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using InvoicingService.Domain.Models;
 
 namespace InvoicingService.DataAccess.Configuration
 {

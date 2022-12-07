@@ -6,15 +6,13 @@ using InvoicingService.DataAccess;
 using InvoicingService.Domain;
 using InvoicingService.Filters;
 using InvoicingService.RestClients;
-using InvoicingService.RestClients.Myob;
-using InvoicingService.RestClients.Xero;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using WatchDog;
 
 namespace InvoicingService
 {
@@ -26,12 +24,14 @@ namespace InvoicingService
         {
             var builder = WebApplication.CreateBuilder(args);
             
-            builder.Services.AddControllers(x => x.Filters.Add(new ExceptionHandlerFilter())); // Add global filters
+            builder.Services.AddControllers(opt => opt.Filters.Add(new ExceptionHandlerFilter())); // Add global filters
+            
             builder.Services.AddEndpointsApiExplorer();
+            
             // Register the Swagger generator, defining 1 or more Swagger documents 
-            builder.Services.AddSwaggerGen(x =>
+            builder.Services.AddSwaggerGen(opt =>
             {
-                x.SwaggerDoc("v1", new OpenApiInfo
+                opt.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
                     Title = "Invoicing Web API",
@@ -51,25 +51,36 @@ namespace InvoicingService
                 // Set the comments path for the Swagger 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                x.IncludeXmlComments(xmlPath);
+                opt.IncludeXmlComments(xmlPath);
             });
 
             builder.Services.AddFluentValidationAutoValidation();
             
             builder.Services.AddMvcCore().AddApiExplorer();
             
-            builder.Services.AddDbContext<InvoicingDbContext>(opts =>
+            builder.Services.AddDbContext<InvoicingDbContext>(opt =>
             {
-                opts.UseSqlServer(builder.Configuration.GetConnectionString("InvoicingDb"));
+                opt.UseSqlServer(builder.Configuration.GetConnectionString("InvoicingDb"));
             });
 
+            // Add functional
             builder.Services.AddScoped<ICompanyProviderRepository, CompanyProviderRepository>();
             builder.Services.AddSingleton<IInvoiceClientFactory, InvoiceClientFactory>();
             
-            // Scan these assemblies for auto mapper profiles
+            // Scan controller assembly for auto mapper profiles
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
-            
+
+            builder.Services.AddWatchDogServices(opt =>
+            {
+                opt.IsAutoClear = true;
+                opt.ClearTimeSchedule = WatchDog.src.Enums.WatchDogAutoClearScheduleEnum.Quarterly; 
+                opt.SetExternalDbConnString = builder.Configuration.GetConnectionString("InvoicingDb");
+                opt.SqlDriverOption = WatchDog.src.Enums.WatchDogSqlDriverEnum.MSSQL;
+            });
+
+            // Build the app and expose web app members
             var app = builder.Build();
+
             if (app.Environment.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
@@ -87,7 +98,18 @@ namespace InvoicingService
             app.UseRouting();
 
             app.MapControllers();
+
+            app.UseWatchDogExceptionLogger();
             
+            // Add the admin portal
+            app.UseWatchDog(opt =>
+            {
+                opt.WatchPageUsername = app.Configuration["WatchDogUsername"];
+                opt.WatchPagePassword = app.Configuration["WatchDogPassword"];
+                opt.Blacklist = "InvoiceHealth";
+            });
+
+            // Start the app
             app.Run();
         }
     }

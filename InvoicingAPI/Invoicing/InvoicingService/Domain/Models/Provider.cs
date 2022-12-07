@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Infrastructure.Core.Models;
 
-namespace InvoicingService.Domain
+namespace InvoicingService.Domain.Models
 {
     /// <summary/>
     public class Provider : IAggregateRoot

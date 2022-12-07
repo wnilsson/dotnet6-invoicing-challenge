@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InvoicingService.Api.Models;
-using InvoicingService.Domain;
+using InvoicingService.Domain.Models;
 
 namespace InvoicingService.Models.MappingConfigs
 {

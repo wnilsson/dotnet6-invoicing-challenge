@@ -1,6 +1,6 @@
 ﻿using Infrastructure.Core.Models;
 
-namespace InvoicingService.Domain
+namespace InvoicingService.Domain.Models
 {
     /// <summary/>
     public class CompanyProvider : IAggregateRoot

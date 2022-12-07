@@ -1,4 +1,4 @@
-﻿using InvoicingService.Domain;
+﻿using InvoicingService.Domain.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 

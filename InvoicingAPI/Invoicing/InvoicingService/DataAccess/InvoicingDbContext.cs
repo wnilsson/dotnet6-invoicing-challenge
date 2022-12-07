@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using InvoicingService.Domain;
+using InvoicingService.Domain.Models;
 
 namespace InvoicingService.DataAccess
 {

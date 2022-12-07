@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Core.EntityFramework;
 using InvoicingService.Domain;
+using InvoicingService.Domain.Models;
 
 namespace InvoicingService.DataAccess
 {

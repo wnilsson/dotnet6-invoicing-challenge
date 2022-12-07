@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using InvoicingService.Domain;
 using InvoicingService.RestClients;
-using InvoicingService.Extensions;
 using Moq;
 using NUnit.Framework;
+using InvoicingService.Domain.Extensions;
+using InvoicingService.Domain.Models;
 
 namespace InvoicingService.UnitTests.Domain
 {

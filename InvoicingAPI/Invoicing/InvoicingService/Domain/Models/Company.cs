@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Infrastructure.Core.Models;
 
-namespace InvoicingService.Domain
+namespace InvoicingService.Domain.Models
 {
     /// <summary/>
     public class Company : IAggregateRoot
@@ -28,5 +28,5 @@ namespace InvoicingService.Domain
 
         /// <summary/>
         public virtual IList<CompanyProvider> CompanyProvider { get; set; }
-}
+    }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace InvoicingService.Domain
+namespace InvoicingService.Domain.Models
 {
     /// <summary>
     /// Business domain model object

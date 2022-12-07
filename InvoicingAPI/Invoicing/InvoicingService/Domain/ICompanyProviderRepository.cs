@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Core.EntityFramework;
+using InvoicingService.Domain.Models;
 
 namespace InvoicingService.Domain
 {
