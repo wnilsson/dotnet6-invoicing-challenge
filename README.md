@@ -1,11 +1,13 @@
-## The Challenge
+## Summary
+This started as the basic coding challenge below but has evolved to a larger solution where I can sandpit various .Net core Web Api features, patterns etc.
 
+#### The Challenge
 Assume currently, we require our customers to provide their financial data for risk evaluation purpose every 6 months via email. We would like to speed up this process by connecting to their accounting software and pull down their sales records. 
 
-### Background: 
+#### Background: 
 Let’s assume, we want to support Xero to start with. 
 
-### Requirements:
+#### Requirements:
 - Pull down last 6 months of invoices with critical data points
     - Invoice customer name
     - Invoice issue date
