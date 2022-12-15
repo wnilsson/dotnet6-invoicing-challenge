@@ -1,10 +1,10 @@
-﻿using Infrastructure.Core.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Infrastructure.Core.Models;
 
-namespace Infrastructure.Core.EntityFramework
+namespace Infrastructure.Core.DataAccess
 {
     public interface IRepository<TEntity> where TEntity : IAggregateRoot
     {

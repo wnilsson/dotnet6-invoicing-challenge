@@ -1,4 +1,4 @@
-﻿using Infrastructure.Core.EntityFramework;
+﻿using Infrastructure.Core.DataAccess.EF;
 using InvoicingService.Domain;
 using InvoicingService.Domain.Models;
 

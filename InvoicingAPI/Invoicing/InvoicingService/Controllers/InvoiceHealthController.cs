@@ -35,21 +35,19 @@ namespace InvoicingService.Controllers
         }
 
         /// <summary>
-        /// Return a customers account health info and a summary of recent invoices
+        /// Return a customer's (organisation) account health info and a summary of recent invoices
         /// </summary>
         [HttpGet]
         [Route("{customerId}/take/{take}")]
         public async Task<ActionResult<InvoiceHealthViewModel>> GetInvoiceHealthSummaryAsync(int customerId, int take = 10)
         {
-            var fromDate = DateTime.Now.AddMonths(-Convert.ToInt32(_configuration["InvoicePeriodMonths"]));
-            var healthPeriodDays = Convert.ToInt32(_configuration["InvoiceHealthPeriodDays"]);
-
             // Get the provider code for customerId
             var companyProvider = await _repository.SingleOrDefaultAsync(x => x.Provider, y => y.CompanyId == customerId).ConfigureAwait(false);
             if (companyProvider == null) return BadRequest($"Provider not found for customerId {customerId}");
 
             // Get an invoice summary via the customers 3rd party provider for a date period
             var invoiceClient = _invoiceClientFactory.GetInstance(companyProvider.Provider.ProviderCode, _mapper);
+            var fromDate = DateTime.Now.AddMonths(-Convert.ToInt32(_configuration["InvoicePeriodMonths"]));
             List<Invoice> invoices = await invoiceClient.GetInvoiceSummaryFromDateAsync(customerId, fromDate).ConfigureAwait(false);
             if (invoices.Count == 0) return NotFound();
 
@@ -57,7 +55,7 @@ namespace InvoicingService.Controllers
             {
                 CustomerId = customerId,
                 // Set the health flag of the customers accounts
-                IsHealthy = invoices.GetHealthStatus(healthPeriodDays),
+                IsHealthy = invoices.GetHealthStatus(Convert.ToInt32(_configuration["InvoiceHealthPeriodDays"])),
                 // Get the recent invoice summary results, ordered descending
                 InvoiceSummary = invoices.OrderByDescending(x => x.InvoiceDate).Take(take).Select(x => _mapper.Map<InvoiceSummaryItemViewModel>(x))
             };

@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Core.EntityFramework
+namespace Infrastructure.Core.DataAccess.EF
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IAggregateRoot
     {

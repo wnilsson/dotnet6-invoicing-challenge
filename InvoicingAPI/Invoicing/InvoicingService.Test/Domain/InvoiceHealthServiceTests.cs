@@ -8,7 +8,7 @@ using NUnit.Framework;
 using InvoicingService.Domain.Extensions;
 using InvoicingService.Domain.Models;
 
-namespace InvoicingService.UnitTests.Domain
+namespace InvoicingService.Test.Domain
 {
     [TestFixture]
     public class InvoiceHealthServiceTests

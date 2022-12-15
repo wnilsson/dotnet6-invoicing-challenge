@@ -54,6 +54,14 @@ namespace InvoicingService
                 opt.IncludeXmlComments(xmlPath);
             });
 
+            builder.Services.AddWatchDogServices(opt =>
+            {
+                opt.IsAutoClear = true;
+                opt.ClearTimeSchedule = WatchDog.src.Enums.WatchDogAutoClearScheduleEnum.Quarterly;
+                opt.SetExternalDbConnString = builder.Configuration.GetConnectionString("InvoicingDb");
+                opt.SqlDriverOption = WatchDog.src.Enums.WatchDogSqlDriverEnum.MSSQL;
+            });
+
             builder.Services.AddFluentValidationAutoValidation();
             
             builder.Services.AddMvcCore().AddApiExplorer();
@@ -69,22 +77,14 @@ namespace InvoicingService
             
             // Scan controller assembly for auto mapper profiles
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
-
-            builder.Services.AddWatchDogServices(opt =>
-            {
-                opt.IsAutoClear = true;
-                opt.ClearTimeSchedule = WatchDog.src.Enums.WatchDogAutoClearScheduleEnum.Quarterly; 
-                opt.SetExternalDbConnString = builder.Configuration.GetConnectionString("InvoicingDb");
-                opt.SqlDriverOption = WatchDog.src.Enums.WatchDogSqlDriverEnum.MSSQL;
-            });
-
+            
             // Build the app and expose web app members
             var app = builder.Build();
 
+            app.UseWatchDogExceptionLogger();
+
             if (app.Environment.IsDevelopment())
                 app.UseDeveloperExceptionPage();
-
-            app.UseHttpsRedirection();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -93,14 +93,14 @@ namespace InvoicingService
                 x.SwaggerEndpoint("/swagger/v1/swagger.json", "Invoicing Web API V1");
             });
 
+            app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.MapControllers();
 
-            app.UseWatchDogExceptionLogger();
-            
             // Add the admin portal
             app.UseWatchDog(opt =>
             {

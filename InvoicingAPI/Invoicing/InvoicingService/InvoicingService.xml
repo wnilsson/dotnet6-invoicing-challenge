@@ -12,7 +12,7 @@
         </member>
         <member name="M:InvoicingService.Controllers.InvoiceHealthController.GetInvoiceHealthSummaryAsync(System.Int32,System.Int32)">
             <summary>
-            Return a customers account health info and a summary of recent invoices
+            Return a customer's (organisation) account health info and a summary of recent invoices
             </summary>
         </member>
         <member name="T:InvoicingService.Domain.Extensions.InvoiceExtensions">
@@ -227,7 +227,7 @@
         </member>
         <member name="M:InvoicingService.RestClients.Xero.XeroClient.GetData(System.Int32)">
             <summary>
-            This would be the async API call to Xero using HttpClient but just using mocked data for this exercise
+            ToDo - change to call Xero APIs using HttpClient instead of using mock data 
             </summary>
         </member>
     </members>

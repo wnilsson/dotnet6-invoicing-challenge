@@ -41,7 +41,7 @@ namespace InvoicingService.RestClients.Xero
         }
 
         /// <summary>
-        /// This would be the async API call to Xero using HttpClient but just using mocked data for this exercise
+        /// ToDo - change to call Xero APIs using HttpClient instead of using mock data 
         /// </summary>
         private Task<List<XeroInvoice>> GetData(int companyId)
         {

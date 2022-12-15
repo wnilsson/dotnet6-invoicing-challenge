@@ -22,12 +22,14 @@ namespace InvoicingService.Filters
                 dictionary.Keys.Append("errors");
                 context.Result = new BadRequestObjectResult(dictionary);
                 context.ExceptionHandled = true;
+                return;
             }
 
             if (context.Exception is Exception)
             {
                 context.Result = new StatusCodeResult(StatusCodes.Status500InternalServerError);
                 context.ExceptionHandled = true;
+                return;
             }
         }
     }
