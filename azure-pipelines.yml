@@ -15,20 +15,58 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- checkout: self
+  clean: true
+  fetchTags: false
+
+- task: Assembly-Info-NetCore@3
+  displayName: Set Assembly Manifest Data
+  inputs:
+    VersionNumber: $(Build.BuildNumber)
+    FileVersionNumber: $(Build.BuildNumber)
+    PackageVersion: $(Build.BuildNumber)
+
 - task: NuGetToolInstaller@1
+  displayName: Use NuGet 6.3.0
+  inputs:
+    versionSpec: '>=6.3.0-0'
 
 - task: NuGetCommand@2
+  displayName: NuGet restore
   inputs:
     restoreSolution: '$(solution)'
 
 - task: VSBuild@1
+  displayName: Build solution
   inputs:
     solution: '$(solution)'
     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-
 - task: VSTest@2
+  displayName: Test assemblies
   inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*Test*.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
     platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    configuration: '$(configuration)'
+
+- task: PublishSymbols@2
+  displayName: Publish symbols path
+  continueOnError: True
+  inputs:
+    SearchPattern: '**\bin\**\*.pdb'
+    PublishSymbols: false
+    SymbolServerType: TeamServices
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish Artifact
+  condition: succeededOrFailed()
+  inputs:
+    PathtoPublish: $(build.artifactstagingdirectory)
+    ArtifactName: $(BuildParameters.ArtifactName)
+    TargetPath: '\\my\share\$(Build.DefinitionName)\$(Build.BuildNumber)'
