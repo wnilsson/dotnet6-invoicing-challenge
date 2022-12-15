@@ -19,19 +19,12 @@ steps:
   clean: true
   fetchTags: false
 
-- task: Assembly-Info-NetFramework@3
+- task: Assembly-Info-NetCore@3
+  displayName: Set Assembly Manifest Data
   inputs:
-    Path: '$(Build.SourcesDirectory)'
-    FileNames: |
-      **\AssemblyInfo.cs
-    InsertAttributes: true
-    FileEncoding: 'auto'
-    WriteBOM: false
-    VersionNumber: '$(Build.BuildNumber)'
-    FileVersionNumber: '$(Build.BuildNumber)'
-    LogLevel: 'verbose'
-    FailOnWarning: false
-    DisableTelemetry: false
+    VersionNumber: $(Build.BuildNumber)
+    FileVersionNumber: $(Build.BuildNumber)
+    PackageVersion: $(Build.BuildNumber)
 
 - task: NuGetToolInstaller@1
   displayName: Use NuGet 4.4.1
