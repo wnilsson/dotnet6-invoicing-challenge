@@ -27,7 +27,7 @@ steps:
     PackageVersion: $(Build.BuildNumber)
 
 - task: NuGetToolInstaller@1
-  displayName: Use NuGet 4.4.1
+  displayName: Use NuGet 6.3.0
   inputs:
     versionSpec: '>=6.3.0-0'
 
@@ -45,7 +45,7 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: VSTest@2
-  displayName: Test Assemblies
+  displayName: Test assemblies
   inputs:
     testAssemblyVer2: >-
       **\$(BuildConfiguration)\*test*.dll
