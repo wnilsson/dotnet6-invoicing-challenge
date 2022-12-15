@@ -43,15 +43,15 @@ steps:
     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-
 - task: VSTest@2
   displayName: Test assemblies
   inputs:
-    testAssemblyVer2: >-
-      **\$(BuildConfiguration)\*test*.dll
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*test*.dll
+      !**\*TestAdapter.dll
       !**\obj\**
-    platform: $(BuildPlatform)
-    configuration: $(BuildConfiguration)
+    searchFolder: '$(System.DefaultWorkingDirectory)'
 
 - task: PublishSymbols@2
   displayName: Publish symbols path
