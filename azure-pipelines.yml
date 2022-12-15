@@ -24,7 +24,6 @@ steps:
     Path: '$(Build.SourcesDirectory)'
     FileNames: |
       **\AssemblyInfo.cs
-      **\AssemblyInfo.vb
     InsertAttributes: true
     FileEncoding: 'auto'
     WriteBOM: false
