@@ -19,20 +19,6 @@ steps:
   clean: true
   fetchTags: false
 
-- task: Assembly-Info-NetFramework@3
-  inputs:
-    Path: '$(Build.SourcesDirectory)'
-    FileNames: '**\*AssemblyInfo.cs'
-    InsertAttributes: false
-    FileEncoding: 'auto'
-    WriteBOM: false
-    Company: 'Will Nilsson'
-    VersionNumber: '$(Build.NuildNumber)'
-    FileVersionNumber: '$(Build.NuildNumber)'
-    LogLevel: 'verbose'
-    FailOnWarning: false
-    DisableTelemetry: false
-
 - task: NuGetToolInstaller@1
   displayName: Use NuGet 6.3.0
   inputs:
@@ -42,6 +28,23 @@ steps:
   displayName: NuGet restore
   inputs:
     restoreSolution: '$(solution)'
+
+- task: Assembly-Info-NetCore@3
+  inputs:
+    Path: '$(Build.SourcesDirectory)'
+    FileNames: '**/*.csproj'
+    InsertAttributes: true
+    FileEncoding: 'auto'
+    WriteBOM: false
+    Authors: 'Will Nilsson'
+    Product: 'Invoicing WebApi'
+    Description: 'Invoicing WebApi'
+    VersionNumber: '$(Build.BuildNumber)'
+    FileVersionNumber: '$(Build.BuildNumber)'
+    PackageVersion: '$(Build.BuildNumber)'
+    LogLevel: 'verbose'
+    FailOnWarning: false
+    DisableTelemetry: false
 
 - task: VSBuild@1
   displayName: Build solution
