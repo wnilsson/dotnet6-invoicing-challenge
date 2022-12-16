@@ -62,6 +62,7 @@ steps:
     SearchPattern: '**\bin\**\*.pdb'
     PublishSymbols: false
     SymbolServerType: TeamServices
+    IndexSources: false
 
 - task: PublishBuildArtifacts@1
   displayName: Publish Artifact
