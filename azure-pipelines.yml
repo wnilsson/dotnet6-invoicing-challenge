@@ -19,12 +19,19 @@ steps:
   clean: true
   fetchTags: false
 
-- task: Assembly-Info-NetCore@3
-  displayName: Set Assembly Manifest Data
+- task: Assembly-Info-NetFramework@3
   inputs:
-    VersionNumber: $(Build.BuildNumber)
-    FileVersionNumber: $(Build.BuildNumber)
-    PackageVersion: $(Build.BuildNumber)
+    Path: '$(Build.SourcesDirectory)'
+    FileNames: '**\AssemblyInfo.cs'
+    InsertAttributes: false
+    FileEncoding: 'auto'
+    WriteBOM: false
+    Company: 'Will Nilsson'
+    VersionNumber: '$(Build.NuildNumber)'
+    FileVersionNumber: '$(Build.NuildNumber)'
+    LogLevel: 'verbose'
+    FailOnWarning: false
+    DisableTelemetry: false
 
 - task: NuGetToolInstaller@1
   displayName: Use NuGet 6.3.0
