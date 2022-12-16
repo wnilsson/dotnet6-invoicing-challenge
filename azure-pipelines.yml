@@ -13,6 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  appVersion: '1.0.*-beta'
 
 steps:
 - checkout: self
@@ -39,9 +40,10 @@ steps:
     Authors: 'Will Nilsson'
     Product: 'Invoicing WebApi'
     Description: 'Invoicing WebApi'
-    VersionNumber: '$(Build.BuildNumber)'
-    FileVersionNumber: '$(Build.BuildNumber)'
-    PackageVersion: '$(Build.BuildNumber)'
+    VersionNumber: '$(appVersion)'
+    FileVersionNumber: '$(appVersion)'
+    PackageVersion: '$(appVersion)'
+    UpdateBuildNumber: '$(Build.DefinitionName)_v$(appVersion)'
     LogLevel: 'verbose'
     FailOnWarning: false
     DisableTelemetry: false
