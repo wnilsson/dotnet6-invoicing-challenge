@@ -22,7 +22,7 @@ steps:
 - task: Assembly-Info-NetFramework@3
   inputs:
     Path: '$(Build.SourcesDirectory)'
-    FileNames: '**\AssemblyInfo.cs'
+    FileNames: '**\*AssemblyInfo.cs'
     InsertAttributes: false
     FileEncoding: 'auto'
     WriteBOM: false
