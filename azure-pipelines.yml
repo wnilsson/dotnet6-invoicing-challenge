@@ -66,6 +66,7 @@ steps:
     searchFolder: '$(System.DefaultWorkingDirectory)'
     platform: '$(buildPlatform)'
     configuration: '$(configuration)'
+    codeCoverageEnabled: true
 
 - task: PublishSymbols@2
   displayName: Publish symbols path
