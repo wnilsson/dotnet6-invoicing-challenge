@@ -137,6 +137,15 @@
         <member name="P:InvoicingService.Domain.Models.Provider.CompanyProvider">
             <summary/>
         </member>
+        <member name="T:InvoicingService.Filters.ExceptionHandlerFilter">
+            <summary/>
+        </member>
+        <member name="P:InvoicingService.Filters.ExceptionHandlerFilter.Order">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.Filters.ExceptionHandlerFilter.OnException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary/>
+        </member>
         <member name="T:InvoicingService.Models.MappingConfigs.InvoiceSummaryMappingProfile">
             <summary/>
         </member>
@@ -158,6 +167,12 @@
             </summary>
         </member>
         <member name="T:InvoicingService.RestClients.IInvoiceClientFactory">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.RestClients.IInvoiceClientFactory.GetInstance(System.String,AutoMapper.IMapper)">
+            <summary/>
+        </member>
+        <member name="T:InvoicingService.RestClients.InvoiceClientFactory">
             <summary/>
         </member>
         <member name="M:InvoicingService.RestClients.InvoiceClientFactory.GetInstance(System.String,AutoMapper.IMapper)">
