@@ -11,17 +11,6 @@ namespace InvoicingService.Domain.Models
         public Invoice() { }
 
         /// <summary>
-        /// Unit testing
-        /// </summary>
-        public Invoice(string custName, DateTime invDate, decimal origAmt, decimal outAmt)
-        {
-            CustomerName = custName;
-            InvoiceDate = invDate;
-            OriginalAmount = origAmt;
-            OutstandingAmount = origAmt;
-        }
-
-        /// <summary>
         /// Customers name
         /// </summary>
         public string CustomerName { get; set; }

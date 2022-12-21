@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Infrastructure.Core.Exceptions
 {
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public class BaseException : ApplicationException
     {
         public BaseException()

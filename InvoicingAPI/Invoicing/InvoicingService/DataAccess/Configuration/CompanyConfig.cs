@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using InvoicingService.Domain.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace InvoicingService.DataAccess.Configuration
 {
+    [ExcludeFromCodeCoverage]
     public class CompanyConfig : IEntityTypeConfiguration<Company>
     {
         public void Configure(EntityTypeBuilder<Company> builder)

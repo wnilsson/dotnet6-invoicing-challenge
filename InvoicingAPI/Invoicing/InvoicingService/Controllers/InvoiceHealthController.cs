@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -17,6 +18,7 @@ namespace InvoicingService.Controllers
     [ApiController]
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [ExcludeFromCodeCoverage]
     public class InvoiceHealthController : ControllerBase
     {
         private readonly IMapper _mapper;

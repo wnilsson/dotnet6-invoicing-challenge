@@ -29,12 +29,6 @@
         <member name="T:InvoicingService.Domain.ICompanyProviderRepository">
             <summary/>
         </member>
-        <member name="T:InvoicingService.Domain.MappingConfigs.InvoiceMappingProfile">
-            <summary/>
-        </member>
-        <member name="M:InvoicingService.Domain.MappingConfigs.InvoiceMappingProfile.#ctor">
-            <summary/>
-        </member>
         <member name="T:InvoicingService.Domain.Models.Company">
             <summary/>
         </member>
@@ -101,11 +95,6 @@
         </member>
         <member name="M:InvoicingService.Domain.Models.Invoice.#ctor">
             <summary/>
-        </member>
-        <member name="M:InvoicingService.Domain.Models.Invoice.#ctor(System.String,System.DateTime,System.Decimal,System.Decimal)">
-            <summary>
-            Unit testing
-            </summary>
         </member>
         <member name="P:InvoicingService.Domain.Models.Invoice.CustomerName">
             <summary>
@@ -175,6 +164,12 @@
             <summary>
             Returns an invoice client based on provider code
             </summary>
+        </member>
+        <member name="T:InvoicingService.RestClients.MappingConfigs.XeroInvoiceMappingProfile">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.RestClients.MappingConfigs.XeroInvoiceMappingProfile.#ctor">
+            <summary/>
         </member>
         <member name="T:InvoicingService.RestClients.Myob.MyobClient">
             <summary/>

@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Infrastructure.Core.Models;
 
 namespace InvoicingService.Domain.Models
 {
     /// <summary/>
+    [ExcludeFromCodeCoverage]
     public class Company : IAggregateRoot
     {
         /// <summary>

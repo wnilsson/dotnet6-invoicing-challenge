@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Infrastructure.Core.DataAccess.EF
 {
+    [ExcludeFromCodeCoverage]
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IAggregateRoot
     {
         protected readonly DbContext Context;

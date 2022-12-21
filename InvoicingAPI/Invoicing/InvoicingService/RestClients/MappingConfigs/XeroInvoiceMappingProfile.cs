@@ -2,13 +2,13 @@
 using InvoicingService.Domain.Models;
 using InvoicingService.RestClients.Xero.Entities;
 
-namespace InvoicingService.Domain.MappingConfigs
+namespace InvoicingService.RestClients.MappingConfigs
 {
     /// <summary/>
-    public class InvoiceMappingProfile : Profile
+    public class XeroInvoiceMappingProfile : Profile
     {
         /// <summary/>
-        public InvoiceMappingProfile()
+        public XeroInvoiceMappingProfile()
         {
             CreateMap<XeroInvoice, Invoice>()
                 .ForMember(dest => dest.InvoiceDate, opt => opt.MapFrom(src => src.Date))

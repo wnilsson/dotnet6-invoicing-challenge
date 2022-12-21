@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using FluentValidation.AspNetCore;
@@ -17,6 +18,7 @@ using WatchDog;
 namespace InvoicingService
 {
     /// <summary/>
+    [ExcludeFromCodeCoverage]
     public class Program
     {
         /// <summary/>

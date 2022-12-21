@@ -7,11 +7,12 @@ using Moq;
 using NUnit.Framework;
 using InvoicingService.Domain.Extensions;
 using InvoicingService.Domain.Models;
+using InvoicingService.Domain;
 
 namespace InvoicingService.Test.Domain
 {
     [TestFixture]
-    public class InvoiceHealthServiceTests
+    public class InvoiceHealthTests
     {
         private const int HealthPeriodDays = 90;
         private static readonly DateTime FromDate = DateTime.Now.AddMonths(-6);
@@ -24,8 +25,8 @@ namespace InvoicingService.Test.Domain
             mockInvoiceClient.Setup(x => x.GetInvoiceSummaryFromDateAsync(customerId, FromDate))
                 .Returns(Task.Run(() => new List<Invoice>
                 {
-                    new("fred", DateTime.Now, 100000, 0),
-                    new("bob", DateTime.Now, 100000, 100000)
+                    new Invoice { CustomerName = "fred", InvoiceDate = DateTime.Now, OriginalAmount = 100000, OutstandingAmount = 0 },
+                    new Invoice { CustomerName = "bob", InvoiceDate = DateTime.Now, OriginalAmount = 100000, OutstandingAmount = 100000 }
                 }));
 
             var invoices = mockInvoiceClient.Object.GetInvoiceSummaryFromDateAsync(customerId, FromDate).Result;
@@ -47,8 +48,9 @@ namespace InvoicingService.Test.Domain
             mockInvoiceClient.Setup(x => x.GetInvoiceSummaryFromDateAsync(customerId, FromDate))
                 .Returns(Task.Run(() => new List<Invoice>
                 {
-                    new("fred", DateTime.Now, 100000, 0),
-                    new("bob", DateTime.Now.AddDays(-91), 100000, 100000) // unpaid invoice older than 90 days
+                    new Invoice { CustomerName = "fred", InvoiceDate = DateTime.Now, OriginalAmount = 100000, OutstandingAmount = 0 },
+                    // unpaid invoice older than 90 days
+                    new Invoice { CustomerName = "bob", InvoiceDate = DateTime.Now.AddDays(-91), OriginalAmount = 100000, OutstandingAmount = 100000 }
                 }));
 
             var invoices = mockInvoiceClient.Object.GetInvoiceSummaryFromDateAsync(customerId, FromDate).Result;
@@ -68,8 +70,9 @@ namespace InvoicingService.Test.Domain
             mockInvoiceClient.Setup(x => x.GetInvoiceSummaryFromDateAsync(customerId, FromDate))
                 .Returns(Task.Run(() => new List<Invoice>
                 {
-                    new("fred", DateTime.Now, 50000, 0),
-                    new("bob", DateTime.Now, 20000, 20000) // sum of invoices is less than 100k
+                    // sum of invoices is less than 100k
+                    new Invoice { CustomerName = "fred", InvoiceDate = DateTime.Now, OriginalAmount = 50000, OutstandingAmount = 0 },
+                    new Invoice { CustomerName = "bob", InvoiceDate = DateTime.Now, OriginalAmount = 20000, OutstandingAmount = 20000 }
                 }));
 
             var invoices = mockInvoiceClient.Object.GetInvoiceSummaryFromDateAsync(customerId, FromDate).Result;

@@ -8,9 +8,11 @@ namespace InvoicingService.RestClients
     /// <summary/>
     public interface IInvoiceClientFactory
     {
+        /// <summary/>
         IInvoiceClient GetInstance(string providerCode, IMapper mapper);
     }
 
+    /// <summary/>
     public class InvoiceClientFactory : IInvoiceClientFactory
     {
         /// <summary>

@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using InvoicingService.Domain.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace InvoicingService.DataAccess
 {
+    [ExcludeFromCodeCoverage]
     public class InvoicingDbContext : DbContext
     {
         public InvoicingDbContext(DbContextOptions<InvoicingDbContext> options) : base(options) { }

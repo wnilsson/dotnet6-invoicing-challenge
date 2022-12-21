@@ -8,10 +8,13 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace InvoicingService.Filters
 {
+    /// <summary/>
     public class ExceptionHandlerFilter : IExceptionFilter, IOrderedFilter
     {
+        /// <summary/>
         public int Order => int.MaxValue - 10;
 
+        /// <summary/>
         public void OnException(ExceptionContext context)
         {
             if (context.Exception is BaseException exception)

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using InvoicingService.RestClients.Xero.Entities;
 
 namespace InvoicingService.RestClients.Xero
 {
+    [ExcludeFromCodeCoverage]
     internal class XeroMockData
     {
         internal static Dictionary<int, XeroInvoice[]> Data { get; }
