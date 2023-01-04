@@ -7,6 +7,8 @@ using InvoicingService.DataAccess;
 using InvoicingService.Domain;
 using InvoicingService.Filters;
 using InvoicingService.RestClients;
+using InvoicingService.RestClients.Myob;
+using InvoicingService.RestClients.Xero;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -73,12 +75,14 @@ namespace InvoicingService
                 opt.UseSqlServer(builder.Configuration.GetConnectionString("InvoicingDb"));
             });
 
-            // Add functional
-            builder.Services.AddScoped<ICompanyProviderRepository, CompanyProviderRepository>();
-            builder.Services.AddSingleton<IInvoiceClientFactory, InvoiceClientFactory>();
-            
             // Scan controller assembly for auto mapper profiles
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+            // Add functional
+            builder.Services.AddScoped<ICompanyProviderRepository, CompanyProviderRepository>();
+            builder.Services.AddScoped<IInvoiceClientFactory, InvoiceClientFactory>();
+            builder.Services.AddScoped<XeroClient>().AddScoped<IInvoiceClient, XeroClient>(s => s.GetRequiredService<XeroClient>());
+            builder.Services.AddScoped<MyobClient>().AddScoped<IInvoiceClient, MyobClient>(s => s.GetRequiredService<MyobClient>());
             
             // Build the app and expose web app members
             var app = builder.Build();

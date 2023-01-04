@@ -169,13 +169,16 @@
         <member name="T:InvoicingService.RestClients.IInvoiceClientFactory">
             <summary/>
         </member>
-        <member name="M:InvoicingService.RestClients.IInvoiceClientFactory.GetInstance(System.String,AutoMapper.IMapper)">
+        <member name="M:InvoicingService.RestClients.IInvoiceClientFactory.GetInvoiceClient(System.String)">
             <summary/>
         </member>
         <member name="T:InvoicingService.RestClients.InvoiceClientFactory">
             <summary/>
         </member>
-        <member name="M:InvoicingService.RestClients.InvoiceClientFactory.GetInstance(System.String,AutoMapper.IMapper)">
+        <member name="M:InvoicingService.RestClients.InvoiceClientFactory.#ctor(System.IServiceProvider)">
+            <summary/>
+        </member>
+        <member name="M:InvoicingService.RestClients.InvoiceClientFactory.GetInvoiceClient(System.String)">
             <summary>
             Returns an invoice client based on provider code
             </summary>

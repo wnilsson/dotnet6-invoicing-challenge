@@ -46,9 +46,10 @@ namespace InvoicingService.Controllers
             // Get the provider code for customerId
             var companyProvider = await _repository.SingleOrDefaultAsync(x => x.Provider, y => y.CompanyId == customerId).ConfigureAwait(false);
             if (companyProvider == null) return BadRequest($"Provider not found for customerId {customerId}");
-
+            // Use factory to get the required invoice client for the provider code
+            var invoiceClient = _invoiceClientFactory.GetInvoiceClient(companyProvider.Provider.ProviderCode);
+            
             // Get an invoice summary via the customers 3rd party provider for a date period
-            var invoiceClient = _invoiceClientFactory.GetInstance(companyProvider.Provider.ProviderCode, _mapper);
             var fromDate = DateTime.Now.AddMonths(-Convert.ToInt32(_configuration["InvoicePeriodMonths"]));
             List<Invoice> invoices = await invoiceClient.GetInvoiceSummaryFromDateAsync(customerId, fromDate).ConfigureAwait(false);
             if (invoices.Count == 0) return NotFound();

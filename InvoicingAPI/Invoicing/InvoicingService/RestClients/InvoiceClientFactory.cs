@@ -1,7 +1,7 @@
 ﻿using System;
-using AutoMapper;
 using InvoicingService.RestClients.Myob;
 using InvoicingService.RestClients.Xero;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace InvoicingService.RestClients
 {
@@ -9,22 +9,33 @@ namespace InvoicingService.RestClients
     public interface IInvoiceClientFactory
     {
         /// <summary/>
-        IInvoiceClient GetInstance(string providerCode, IMapper mapper);
+        IInvoiceClient GetInvoiceClient(string providerCode);
     }
 
     /// <summary/>
     public class InvoiceClientFactory : IInvoiceClientFactory
     {
+        private readonly IServiceProvider _serviceProvider;
+
+        /// <summary/>
+        public InvoiceClientFactory(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+        }
+
         /// <summary>
         /// Returns an invoice client based on provider code
         /// </summary>
-        public IInvoiceClient GetInstance(string providerCode, IMapper mapper)
+        public IInvoiceClient GetInvoiceClient(string providerCode)
         {
             switch (providerCode)
             {
-                case "XERO": return new XeroClient(mapper);
-                case "MYOB": return new MyobClient(mapper);
-                default: throw new NotImplementedException();
+                case "XERO": 
+                    return (IInvoiceClient)_serviceProvider.GetRequiredService(typeof(XeroClient));
+                case "MYOB": 
+                    return (IInvoiceClient)_serviceProvider.GetRequiredService(typeof(MyobClient));
+                default: 
+                    throw new NotImplementedException();
             }
         }
     }
