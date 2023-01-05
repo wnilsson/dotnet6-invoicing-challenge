@@ -19,7 +19,7 @@ new Vue({
             })
             if (customerExists) this.invHealths.splice(index, 1);
             
-            let url = `http://localhost/invoicing/api/invoicehealth/${custId}/take/10`;
+            let url = `http://localhost/invoicing/api/v1/invoicehealth?customerId=${custId}&summaryCount=10`;
             axios
                 .get(url, { headers: { 'Access-Control-Allow-Origin': '*' }})
                 .then(r => {

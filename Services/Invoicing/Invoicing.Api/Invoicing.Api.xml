@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Invoicing.Api</name>
+    </assembly>
+    <members>
+        <!-- Badly formed XML comment ignored for member "M:Invoicing.Api.Controllers.InvoiceHealthController.GetInvoiceHealthSummaryAsync(System.Int32,System.Int32)" -->
+        <member name="M:Invoicing.Api.Domain.Extensions.InvoiceExtensions.GetHealthStatus(System.Collections.Generic.List{Invoicing.Api.Domain.Models.Invoice},System.Int32)">
+            <summary>
+            Get the overall health status for a set of invoices
+            A healthy account is
+            - No outstanding invoice is older than 90 days
+            - the sum of invoices’ original amount is greater than 100k
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Domain.Models.Company.Id">
+            <summary>
+            Company Id
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Domain.Models.Company.CompanyName">
+            <summary>
+            Company name
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Domain.Models.Company.CompanyContact">
+            <summary>
+            Company primary contact
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Domain.Models.Company.CompanyUrl">
+            <summary>
+            Company Url
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Domain.Models.CompanyProvider.Id">
+            <summary>
+            CompanyProvider Id
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Domain.Models.CompanyProvider.ClientSecret">
+            <summary>
+            Providers client secret for the associated company
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Domain.Models.CompanyProvider.IsActive">
+            <summary>
+            Flag to indicate if the company provider is active
+            </summary>
+        </member>
+        <member name="T:Invoicing.Api.Domain.Models.Invoice">
+            <summary>
+            Business domain model object
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Domain.Models.Invoice.CustomerName">
+            <summary>
+            Customers name
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Domain.Models.Invoice.InvoiceDate">
+            <summary>
+            Invoice Date
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Domain.Models.Invoice.OriginalAmount">
+            <summary>
+            Original invoice amount
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Domain.Models.Invoice.OutstandingAmount">
+            <summary>
+            Outstanding invoice amount
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Domain.Models.Provider.Id">
+            <summary>
+            Provider Id
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Domain.Models.Provider.ProviderCode">
+            <summary>
+            Provider code
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Domain.Models.Provider.ProviderName">
+            <summary>
+            Provider name
+            </summary>
+        </member>
+        <member name="T:Invoicing.Api.Models.InvoiceHealthViewModel">
+            <summary>
+            Invoice Health
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Models.InvoiceHealthViewModel.CustomerId">
+            <summary>
+            The Id of the customer (organisation)
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Models.InvoiceHealthViewModel.IsHealthy">
+            <summary>
+            Flag to determine overall account health
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Models.InvoiceHealthViewModel.InvoiceSummary">
+            <summary>
+            Most recent invoices in summary form
+            </summary>
+        </member>
+        <member name="T:Invoicing.Api.Models.InvoiceSummaryItemViewModel">
+            <summary>
+            Invoice Summary 
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Models.InvoiceSummaryItemViewModel.CustomerName">
+            <summary>
+            Invoice Customer's Name
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Models.InvoiceSummaryItemViewModel.IssueDate">
+            <summary>
+            Invoice Date of issue
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Models.InvoiceSummaryItemViewModel.OriginalAmount">
+            <summary>
+            Original invoice amount
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.Models.InvoiceSummaryItemViewModel.OutstandingAmount">
+            <summary>
+            Outstanding invoice amount
+            </summary>
+        </member>
+        <member name="M:Invoicing.Api.RestClients.IInvoiceClient.GetInvoiceSummaryFromDateAsync(System.Int32,System.DateTime)">
+            <summary>
+            Get all invoices for company with Id = companyId from fromDate
+            </summary>
+        </member>
+        <member name="M:Invoicing.Api.RestClients.InvoiceClientFactory.GetInvoiceClient(System.String)">
+            <summary>
+            Returns an invoice client based on provider code
+            </summary>
+        </member>
+        <member name="M:Invoicing.Api.RestClients.Myob.MyobClient.GetInvoiceSummaryFromDateAsync(System.Int32,System.DateTime)">
+            <summary>
+            Get all MYOB invoices for companyId from date
+            </summary>
+        </member>
+        <member name="T:Invoicing.Api.RestClients.Xero.Models.XeroInvoice">
+            <summary>
+            Using property names similar to the GET invoices summary only Xero API
+            https://api-explorer.xero.com/accounting/invoices/getinvoices?query-summaryonly=true
+            </summary>
+        </member>
+        <member name="P:Invoicing.Api.RestClients.Xero.Models.XeroInvoice.InvoiceNumber">
+            <summary/>
+        </member>
+        <member name="P:Invoicing.Api.RestClients.Xero.Models.XeroInvoice.CustomerId">
+            <summary/>
+        </member>
+        <member name="P:Invoicing.Api.RestClients.Xero.Models.XeroInvoice.CustomerName">
+            <summary/>
+        </member>
+        <member name="P:Invoicing.Api.RestClients.Xero.Models.XeroInvoice.Date">
+            <summary/>
+        </member>
+        <member name="P:Invoicing.Api.RestClients.Xero.Models.XeroInvoice.AmountDue">
+            <summary/>
+        </member>
+        <member name="P:Invoicing.Api.RestClients.Xero.Models.XeroInvoice.AmountPaid">
+            <summary/>
+        </member>
+        <member name="P:Invoicing.Api.RestClients.Xero.Models.XeroInvoice.OriginalAmount">
+            <summary/>
+        </member>
+        <member name="M:Invoicing.Api.RestClients.Xero.XeroClient.GetInvoiceSummaryFromDateAsync(System.Int32,System.DateTime)">
+            <summary>
+            Get all Xero invoices for companyId from date
+            </summary>
+        </member>
+        <member name="M:Invoicing.Api.RestClients.Xero.XeroClient.GetData(System.Int32)">
+            <summary>
+            ToDo - change to call Xero APIs using HttpClient instead of using mock data 
+            </summary>
+        </member>
+    </members>
+</doc>
