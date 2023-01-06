@@ -24,11 +24,11 @@ namespace Invoicing.Test.Mappers
 
             var xeroInvoices = new List<XeroInvoice>
             {
-                new XeroInvoice
+                new()
                 {
                     InvoiceNumber = 1, CustomerId = 1, CustomerName = "fred", Date = invoiceDate.AddDays(-200), AmountPaid = 150, AmountDue = 30
                 },
-                new XeroInvoice
+                new()
                 {
                     InvoiceNumber = 2, CustomerId = 1, CustomerName = "bob", Date = invoiceDate.AddDays(-130), AmountPaid = 2000, AmountDue = 0
                 }
@@ -36,7 +36,6 @@ namespace Invoicing.Test.Mappers
 
             // Act
             var invoices = xeroInvoices.Select(x => mapper.Map<Invoice>(x)).ToList();
-            
             // Assert
             Assert.AreEqual(invoices.Count, 2);
             var invoice = invoices.First();
@@ -56,8 +55,8 @@ namespace Invoicing.Test.Mappers
 
             var invoices = new List<Invoice>
             {
-                new Invoice { CustomerName = "fred", InvoiceDate = invoiceDate, OriginalAmount = 4000, OutstandingAmount = 1000 },
-                new Invoice { CustomerName = "bob", InvoiceDate = invoiceDate, OriginalAmount = 100000, OutstandingAmount = 2000 }
+                new() { CustomerName = "fred", InvoiceDate = invoiceDate, OriginalAmount = 4000, OutstandingAmount = 1000 },
+                new() { CustomerName = "bob", InvoiceDate = invoiceDate, OriginalAmount = 100000, OutstandingAmount = 2000 }
             };
 
             // Act

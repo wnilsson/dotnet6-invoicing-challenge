@@ -28,7 +28,7 @@ namespace Invoicing.Test.Domain
         public void XeroClientFactoryTest()
         {
             // Act
-            var client = new InvoiceClientFactory(_serviceProvider.Object).GetInvoiceClient("XERO");
+            var client = new InvoiceClientFactory(_serviceProvider.Object).GetInvoiceClient(TestHelper.XeroProviderCode);
             // Assert
             Assert.IsTrue(client is XeroClient);
         }
