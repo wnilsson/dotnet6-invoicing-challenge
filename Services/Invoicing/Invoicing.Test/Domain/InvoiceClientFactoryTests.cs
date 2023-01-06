@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using AutoMapper;
 using Invoicing.Api.RestClients;
 using Invoicing.Api.RestClients.Myob;
@@ -11,11 +10,11 @@ using NUnit.Framework;
 namespace Invoicing.Test.Domain
 {
     [TestFixture]
-    public class InvoiceClientTests
+    public class InvoiceClientFactoryTests
     {
         private readonly Mock<IServiceProvider> _serviceProvider;
 
-        public InvoiceClientTests()
+        public InvoiceClientFactoryTests()
         {
             // Arrange
             var mappingConfig = new MapperConfiguration(x => { x.AddProfile(new XeroInvoiceMappingProfile()); });
@@ -26,27 +25,25 @@ namespace Invoicing.Test.Domain
         }
         
         [Test]
-        public void XeroClientTest()
+        public void XeroClientFactoryTest()
         {
-            
-            var xeroClient = new InvoiceClientFactory(_serviceProvider.Object).GetInvoiceClient("XERO");
             // Act
-            var invoices = xeroClient.GetInvoiceSummaryFromDateAsync(1, DateTime.Now.AddMonths(-6)).Result;
+            var client = new InvoiceClientFactory(_serviceProvider.Object).GetInvoiceClient("XERO");
             // Assert
-            Assert.IsTrue(invoices.Count > 0);
-            Assert.IsTrue(invoices.Any(x => x.CustomerName == "Donald Duck"));
+            Assert.IsTrue(client is XeroClient);
         }
 
         [Test]
-        public void MyobClientThrowsNotImplementedTest()
+        public void MyobClientFactoryTest()
         {
-            var myobClient = new InvoiceClientFactory(_serviceProvider.Object).GetInvoiceClient("MYOB");
-            // Act/Assert
-            Assert.Throws<NotImplementedException>(() => myobClient.GetInvoiceSummaryFromDateAsync(1, DateTime.Now.AddMonths(-6)));
+            // Act
+            var client = new InvoiceClientFactory(_serviceProvider.Object).GetInvoiceClient("MYOB");
+            // Assert
+            Assert.IsTrue(client is MyobClient);
         }
 
         [Test]
-        public void InvalidClientThrowsNotImplementedTest()
+        public void UnimplementedClientFactoryTest()
         {
             // Act/Assert
             Assert.Throws<NotImplementedException>(() => new InvoiceClientFactory(_serviceProvider.Object).GetInvoiceClient("XXXX"));

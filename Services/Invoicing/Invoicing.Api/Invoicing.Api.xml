@@ -154,27 +154,6 @@
             https://api-explorer.xero.com/accounting/invoices/getinvoices?query-summaryonly=true
             </summary>
         </member>
-        <member name="P:Invoicing.Api.RestClients.Xero.Models.XeroInvoice.InvoiceNumber">
-            <summary/>
-        </member>
-        <member name="P:Invoicing.Api.RestClients.Xero.Models.XeroInvoice.CustomerId">
-            <summary/>
-        </member>
-        <member name="P:Invoicing.Api.RestClients.Xero.Models.XeroInvoice.CustomerName">
-            <summary/>
-        </member>
-        <member name="P:Invoicing.Api.RestClients.Xero.Models.XeroInvoice.Date">
-            <summary/>
-        </member>
-        <member name="P:Invoicing.Api.RestClients.Xero.Models.XeroInvoice.AmountDue">
-            <summary/>
-        </member>
-        <member name="P:Invoicing.Api.RestClients.Xero.Models.XeroInvoice.AmountPaid">
-            <summary/>
-        </member>
-        <member name="P:Invoicing.Api.RestClients.Xero.Models.XeroInvoice.OriginalAmount">
-            <summary/>
-        </member>
         <member name="M:Invoicing.Api.RestClients.Xero.XeroClient.GetInvoiceSummaryFromDateAsync(System.Int32,System.DateTime)">
             <summary>
             Get all Xero invoices for companyId from date

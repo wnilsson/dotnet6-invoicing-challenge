@@ -52,7 +52,7 @@ namespace Invoicing.Api.Controllers
             var invoiceClient = _invoiceClientFactory.GetInvoiceClient(companyProvider.Provider.ProviderCode);
 
             // Get an invoice summary via the customers 3rd party provider for a date period
-            var fromDate = DateTime.Now.AddMonths(-Convert.ToInt32(_configuration["InvoicePeriodMonths"]));
+            var fromDate = DateTime.Today.AddMonths(-Convert.ToInt32(_configuration["InvoicePeriodMonths"]));
             List<Invoice> invoices = await invoiceClient.GetInvoiceSummaryFromDateAsync(customerId, fromDate).ConfigureAwait(false);
             if (invoices.Count == 0) return NotFound();
 

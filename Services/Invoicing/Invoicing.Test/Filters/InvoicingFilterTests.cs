@@ -18,6 +18,7 @@ namespace Invoicing.Test.Filters
         [Test]
         public void ExceptionFilter_BadRequestTest()
         {
+            // Arrange
             var exceptionFilter = new ExceptionHandlerFilter();
             var actionContext = new ActionContext(new DefaultHttpContext(), new RouteData(), new ActionDescriptor(), new ModelStateDictionary());
             var exceptionContext = new ExceptionContext(actionContext, new List<IFilterMetadata>())
@@ -37,6 +38,7 @@ namespace Invoicing.Test.Filters
         [Test]
         public void ExceptionFilter_InternalServerTest()
         {
+            // Arrange
             var exceptionFilter = new ExceptionHandlerFilter();
             var actionContext = new ActionContext(new DefaultHttpContext(), new RouteData(), new ActionDescriptor(), new ModelStateDictionary());
             var exceptionContext = new ExceptionContext(actionContext, new List<IFilterMetadata>())

@@ -17,6 +17,7 @@ namespace Invoicing.Test.Mappers
         [Test]
         public void XeroInvoiceMapperTest()
         {
+            // Arrange
             var mappingConfig = new MapperConfiguration(x => { x.AddProfile(new XeroInvoiceMappingProfile()); });
             IMapper mapper = mappingConfig.CreateMapper();
             var invoiceDate = DateTime.Now;
@@ -33,9 +34,11 @@ namespace Invoicing.Test.Mappers
                 }
             };
 
+            // Act
             var invoices = xeroInvoices.Select(x => mapper.Map<Invoice>(x)).ToList();
+            
+            // Assert
             Assert.AreEqual(invoices.Count, 2);
-
             var invoice = invoices.First();
             Assert.AreEqual(invoice.CustomerName, "fred");
             Assert.AreEqual(invoice.OriginalAmount, xeroInvoices.First().OriginalAmount);
@@ -46,6 +49,7 @@ namespace Invoicing.Test.Mappers
         [Test]
         public void InvoiceSummaryMapperTest()
         {
+            // Arrange
             var mappingConfig = new MapperConfiguration(x => { x.AddProfile(new InvoiceSummaryMappingProfile()); });
             IMapper mapper = mappingConfig.CreateMapper();
             var invoiceDate = DateTime.Now;
@@ -56,9 +60,11 @@ namespace Invoicing.Test.Mappers
                 new Invoice { CustomerName = "bob", InvoiceDate = invoiceDate, OriginalAmount = 100000, OutstandingAmount = 2000 }
             };
 
+            // Act
             var invoiceSummaries = invoices.Select(x => mapper.Map<InvoiceSummaryItemViewModel>(x)).ToList();
+            
+            // Assert
             Assert.AreEqual(invoiceSummaries.Count, 2);
-
             var invoiceSummary = invoiceSummaries.First();
             Assert.AreEqual(invoiceSummary.CustomerName, "fred");
             Assert.AreEqual(invoiceSummary.OriginalAmount, 4000);
