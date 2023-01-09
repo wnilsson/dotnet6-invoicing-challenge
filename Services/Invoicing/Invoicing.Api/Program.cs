@@ -60,8 +60,8 @@ namespace Invoicing.Api
             {
                 opt.IsAutoClear = true;
                 opt.ClearTimeSchedule = WatchDog.src.Enums.WatchDogAutoClearScheduleEnum.Quarterly;
-                opt.SetExternalDbConnString = builder.Configuration.GetConnectionString("InvoicingDb");
-                opt.SqlDriverOption = WatchDog.src.Enums.WatchDogSqlDriverEnum.MSSQL;
+                //opt.SetExternalDbConnString = builder.Configuration.GetConnectionString("InvoicingDb");
+                //opt.SqlDriverOption = WatchDog.src.Enums.WatchDogSqlDriverEnum.MSSQL;
             });
 
             builder.Services.AddFluentValidationAutoValidation();
@@ -85,16 +85,24 @@ namespace Invoicing.Api
             // Build the app and expose web app members
             var app = builder.Build();
 
-            app.UseWatchDogExceptionLogger();
+            //if (app.Environment.IsDevelopment())
+            //    app.UseDeveloperExceptionPage();
 
-            if (app.Environment.IsDevelopment())
-                app.UseDeveloperExceptionPage();
+            app.UseWatchDogExceptionLogger();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
-            app.UseSwaggerUI(x =>
+            app.UseSwaggerUI(opt =>
             {
-                x.SwaggerEndpoint("/swagger/v1/swagger.json", "Invoicing Web API V1");
+                opt.SwaggerEndpoint("/swagger/v1/swagger.json", "Invoicing Web API V1");
+            });
+
+            // Add the admin portal
+            app.UseWatchDog(opt =>
+            {
+                opt.WatchPageUsername = app.Configuration["WatchDogUsername"];
+                opt.WatchPagePassword = app.Configuration["WatchDogPassword"];
+                opt.Blacklist = "InvoiceHealth";
             });
 
             app.UseHttpsRedirection();
@@ -104,14 +112,6 @@ namespace Invoicing.Api
             app.UseRouting();
 
             app.MapControllers();
-
-            // Add the admin portal
-            app.UseWatchDog(opt =>
-            {
-                opt.WatchPageUsername = app.Configuration["WatchDogUsername"];
-                opt.WatchPagePassword = app.Configuration["WatchDogPassword"];
-                opt.Blacklist = "InvoiceHealth";
-            });
 
             // Start the app
             app.Run();

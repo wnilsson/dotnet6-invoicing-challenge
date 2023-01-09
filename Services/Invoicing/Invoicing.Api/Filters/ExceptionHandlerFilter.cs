@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using Infrastructure.Core.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using WatchDog;
 
 namespace Invoicing.Api.Filters
 {
@@ -14,22 +16,33 @@ namespace Invoicing.Api.Filters
 
         public void OnException(ExceptionContext context)
         {
-            if (context.Exception is BaseException exception)
+            if (context.Exception is BaseException baseException)
             {
                 var dictionary = new ModelStateDictionary();
-
-                dictionary.AddModelError("Message", exception.Message);
+                dictionary.AddModelError("Message", baseException.Message);
                 dictionary.Keys.Append("errors");
                 context.Result = new BadRequestObjectResult(dictionary);
                 context.ExceptionHandled = true;
-                return;
+                LogError(baseException, MethodBase.GetCurrentMethod()?.Name);
             }
 
-            if (context.Exception is Exception)
+            else if (context.Exception is { } exception)
             {
                 context.Result = new StatusCodeResult(StatusCodes.Status500InternalServerError);
                 context.ExceptionHandled = true;
-                return;
+                LogError(exception, MethodBase.GetCurrentMethod()?.Name);
+            }
+        }
+
+        private static void LogError(Exception exception, string callerName)
+        {
+            try
+            {
+                WatchLogger.LogError(exception.GetFullException(), callerName);
+            }
+            catch
+            { 
+                // Just suppress if watchdog fails
             }
         }
     }

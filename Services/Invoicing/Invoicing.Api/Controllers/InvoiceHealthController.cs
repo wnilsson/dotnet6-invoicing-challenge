@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Infrastructure.Core.Exceptions;
 using Invoicing.Api.Domain;
 using Invoicing.Api.Domain.Extensions;
 using Invoicing.Api.Domain.Models;
@@ -11,6 +12,7 @@ using Invoicing.Api.Models;
 using Invoicing.Api.RestClients;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using WatchDog;
 
 namespace Invoicing.Api.Controllers
 {
@@ -47,7 +49,7 @@ namespace Invoicing.Api.Controllers
         {
             // Get the provider code for customerId
             var companyProvider = await _repository.SingleOrDefaultAsync(x => x.Provider, y => y.CompanyId == customerId).ConfigureAwait(false);
-            if (companyProvider == null) return BadRequest($"Provider not found for customerId {customerId}");
+            if (companyProvider == null) throw new BaseException($"Provider not found for customerId: {customerId}");
             // Use factory to get the required invoice client for the provider code
             var invoiceClient = _invoiceClientFactory.GetInvoiceClient(companyProvider.Provider.ProviderCode);
 
@@ -65,7 +67,7 @@ namespace Invoicing.Api.Controllers
                 InvoiceSummary = invoices.OrderByDescending(x => x.InvoiceDate).Take(summaryCount)
                     .Select(x => _mapper.Map<InvoiceSummaryItemViewModel>(x))
             };
-
+            
             return Ok(response);
         }
     }

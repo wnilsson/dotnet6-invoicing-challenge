@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Infrastructure.Core.Exceptions;
 using Invoicing.Api.Controllers;
 using Invoicing.Api.Domain;
 using Invoicing.Api.Models;
@@ -43,7 +44,6 @@ namespace Invoicing.Test.Controllers
             mockConfig.Setup(x => x["InvoicePeriodMonths"]).Returns(TestHelper.InvoicePeriodMonths.ToString);
             mockConfig.Setup(x => x["InvoiceHealthPeriodDays"]).Returns(TestHelper.HealthPeriodDays.ToString);
             _configuration = mockConfig.Object;
-
         }
 
         [Test]
@@ -51,14 +51,24 @@ namespace Invoicing.Test.Controllers
         {
             // Arrange
             var mappingConfig = new MapperConfiguration(x => { x.AddProfile(new InvoiceSummaryMappingProfile()); });
-            // Act
             var controller = new InvoiceHealthController(_repository, _factory, mappingConfig.CreateMapper(), _configuration);
+            // Act
             var actionResult = await controller.GetInvoiceHealthSummaryAsync(1, 2);
             // Assert
             Assert.IsInstanceOf<OkObjectResult>(actionResult.Result);
             var response = ((OkObjectResult)actionResult.Result)?.Value as InvoiceHealthViewModel;
             Assert.IsTrue(response?.InvoiceSummary.Count() == 2);
             Assert.IsTrue(response.IsHealthy);
+        }
+
+        [Test]
+        public void GetInvoiceHealthSummaryAsyncThrowsTest()
+        {
+            // Arrange
+            var mappingConfig = new MapperConfiguration(x => { x.AddProfile(new InvoiceSummaryMappingProfile()); });
+            var controller = new InvoiceHealthController(_repository, _factory, mappingConfig.CreateMapper(), _configuration);
+            // Act/Assert
+            Assert.ThrowsAsync<BaseException>(() => controller.GetInvoiceHealthSummaryAsync(3, 1));
         }
     }
 }
