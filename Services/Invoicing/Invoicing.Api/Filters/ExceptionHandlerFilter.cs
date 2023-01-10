@@ -25,9 +25,9 @@ namespace Invoicing.Api.Filters
                 context.ExceptionHandled = true;
                 LogError(baseException, MethodBase.GetCurrentMethod()?.Name);
             }
-
-            else if (context.Exception is { } exception)
+            else
             {
+                var exception = context.Exception;
                 context.Result = new StatusCodeResult(StatusCodes.Status500InternalServerError);
                 context.ExceptionHandled = true;
                 LogError(exception, MethodBase.GetCurrentMethod()?.Name);
@@ -36,14 +36,8 @@ namespace Invoicing.Api.Filters
 
         private static void LogError(Exception exception, string callerName)
         {
-            try
-            {
+            if (!exception.Message.Contains("unit test"))
                 WatchLogger.LogError(exception.GetFullException(), callerName);
-            }
-            catch
-            { 
-                // Just suppress in the unlikely event of failure
-            }
         }
     }
 }

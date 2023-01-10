@@ -15,6 +15,8 @@ namespace Invoicing.Test.Filters
     [TestFixture]
     public class InvoicingFilterTests
     {
+        private const string ExceptionMessage = "unit test";
+
         [Test]
         public void ExceptionFilter_BadRequestTest()
         {
@@ -23,7 +25,7 @@ namespace Invoicing.Test.Filters
             var actionContext = new ActionContext(new DefaultHttpContext(), new RouteData(), new ActionDescriptor(), new ModelStateDictionary());
             var exceptionContext = new ExceptionContext(actionContext, new List<IFilterMetadata>())
             {
-                Exception = new BaseException("unit test")
+                Exception = new BaseException(ExceptionMessage)
             };
 
             // Act
@@ -43,7 +45,7 @@ namespace Invoicing.Test.Filters
             var actionContext = new ActionContext(new DefaultHttpContext(), new RouteData(), new ActionDescriptor(), new ModelStateDictionary());
             var exceptionContext = new ExceptionContext(actionContext, new List<IFilterMetadata>())
             {
-                Exception = new Exception("unit test")
+                Exception = new Exception(ExceptionMessage)
             };
 
             // Act
