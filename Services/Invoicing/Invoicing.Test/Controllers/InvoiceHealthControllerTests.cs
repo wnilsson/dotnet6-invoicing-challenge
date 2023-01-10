@@ -62,7 +62,6 @@ namespace Invoicing.Test.Controllers
         }
 
         [Test]
-        [Ignore("test build failure")]
         public void GetInvoiceHealthSummaryAsyncThrowsTest()
         {
             // Arrange

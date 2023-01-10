@@ -396,5 +396,3 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-/Services/Invoicing/Invoicing.Api/watchlogs-log.db
-/Services/Invoicing/Invoicing.Api/watchlogs.db
