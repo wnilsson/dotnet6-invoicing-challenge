@@ -42,7 +42,7 @@ namespace Invoicing.Api.Filters
             }
             catch
             { 
-                // Just suppress if watchdog fails
+                // Just suppress in the unlikely event of failure
             }
         }
     }
