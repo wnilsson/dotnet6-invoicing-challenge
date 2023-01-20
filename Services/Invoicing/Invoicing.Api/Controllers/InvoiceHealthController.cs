@@ -12,7 +12,6 @@ using Invoicing.Api.Models;
 using Invoicing.Api.RestClients;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using WatchDog;
 
 namespace Invoicing.Api.Controllers
 {

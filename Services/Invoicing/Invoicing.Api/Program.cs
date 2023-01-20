@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using WatchDog;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Invoicing.Api
 {
@@ -84,6 +85,12 @@ namespace Invoicing.Api
 
             //if (app.Environment.IsDevelopment())
             //    app.UseDeveloperExceptionPage();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var dataContext = scope.ServiceProvider.GetRequiredService<InvoicingDbContext>();
+                dataContext.Database.Migrate();
+            }
 
             app.UseWatchDogExceptionLogger();
 
