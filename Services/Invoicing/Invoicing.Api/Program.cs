@@ -59,8 +59,6 @@ namespace Invoicing.Api
             {
                 opt.IsAutoClear = true;
                 opt.ClearTimeSchedule = WatchDog.src.Enums.WatchDogAutoClearScheduleEnum.Quarterly;
-                //opt.SetExternalDbConnString = builder.Configuration.GetConnectionString("InvoicingDb");
-                //opt.SqlDriverOption = WatchDog.src.Enums.WatchDogSqlDriverEnum.MSSQL;
             });
 
             builder.Services.AddFluentValidationAutoValidation();
@@ -69,7 +67,7 @@ namespace Invoicing.Api
             
             builder.Services.AddDbContext<InvoicingDbContext>(opt =>
             {
-                opt.UseSqlServer(builder.Configuration.GetConnectionString("InvoicingDb"));
+                opt.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
             });
 
             // Scan controller assembly for auto mapper profiles
