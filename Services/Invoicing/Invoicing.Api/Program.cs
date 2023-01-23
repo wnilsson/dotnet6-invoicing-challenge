@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using WatchDog;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -82,14 +83,14 @@ namespace Invoicing.Api
             
             // Build the app and expose web app members
             var app = builder.Build();
-
-            //if (app.Environment.IsDevelopment())
-            //    app.UseDeveloperExceptionPage();
-
-            using (var scope = app.Services.CreateScope())
+    
+            if (app.Environment.IsDevelopment())
             {
-                var dataContext = scope.ServiceProvider.GetRequiredService<InvoicingDbContext>();
-                dataContext.Database.Migrate();
+                using (var scope = app.Services.CreateScope())
+                {
+                    var dataContext = scope.ServiceProvider.GetRequiredService<InvoicingDbContext>();
+                    dataContext.Database.Migrate();
+                }
             }
 
             app.UseWatchDogExceptionLogger();
