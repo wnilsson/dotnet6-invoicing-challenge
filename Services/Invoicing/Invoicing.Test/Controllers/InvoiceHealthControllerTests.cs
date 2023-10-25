@@ -53,7 +53,7 @@ namespace Invoicing.Test.Controllers
             var mappingConfig = new MapperConfiguration(x => { x.AddProfile(new InvoiceSummaryMappingProfile()); });
             var controller = new InvoiceHealthController(_repository, _factory, mappingConfig.CreateMapper(), _configuration);
             // Act
-            var actionResult = await controller.GetInvoiceHealthSummaryAsync(1, 2);
+            var actionResult = await controller.InvoiceHealthSummaryAsync(1, 2);
             // Assert
             Assert.IsInstanceOf<OkObjectResult>(actionResult.Result);
             var response = ((OkObjectResult)actionResult.Result)?.Value as InvoiceHealthViewModel;
@@ -68,7 +68,7 @@ namespace Invoicing.Test.Controllers
             var mappingConfig = new MapperConfiguration(x => { x.AddProfile(new InvoiceSummaryMappingProfile()); });
             var controller = new InvoiceHealthController(_repository, _factory, mappingConfig.CreateMapper(), _configuration);
             // Act/Assert
-            Assert.ThrowsAsync<BaseException>(() => controller.GetInvoiceHealthSummaryAsync(3, 1));
+            Assert.ThrowsAsync<BaseException>(() => controller.InvoiceHealthSummaryAsync(3, 1));
         }
     }
 }
