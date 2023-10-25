@@ -4,7 +4,7 @@
         <name>Invoicing.Api</name>
     </assembly>
     <members>
-        <!-- Badly formed XML comment ignored for member "M:Invoicing.Api.Controllers.InvoiceHealthController.GetInvoiceHealthSummaryAsync(System.Int32,System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:Invoicing.Api.Controllers.InvoiceHealthController.InvoiceHealthSummaryAsync(System.Int32,System.Int32)" -->
         <member name="M:Invoicing.Api.Domain.Extensions.InvoiceExtensions.GetHealthStatus(System.Collections.Generic.List{Invoicing.Api.Domain.Models.Invoice},System.Int32)">
             <summary>
             Get the overall health status for a set of invoices

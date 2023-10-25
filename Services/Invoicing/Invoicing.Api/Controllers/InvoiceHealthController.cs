@@ -39,11 +39,11 @@ namespace Invoicing.Api.Controllers
 
         /// <summary>
         /// Return a customer's (organisation) account health info and a summary of recent invoices
-        /// GET /api/v1/InvoiceHealth[?customerId=1&summaryCount=10]
+        /// GET /api/v1/InvoiceHealth/customers/{customerId}?&summaryCount=10
         /// </summary>
-        [HttpGet]
-        public async Task<ActionResult<InvoiceHealthViewModel>> GetInvoiceHealthSummaryAsync(
-            [FromQuery] [Required] int customerId,
+        [HttpGet("customers/{customerId}")]
+        public async Task<ActionResult<InvoiceHealthViewModel>> InvoiceHealthSummaryAsync(
+            [Required] int customerId,
             [FromQuery] int summaryCount = 10)
         {
             // Get the provider code for customerId
