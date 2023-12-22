@@ -138,11 +138,6 @@
             Get all invoices for company with Id = companyId from fromDate
             </summary>
         </member>
-        <member name="M:Invoicing.Api.RestClients.InvoiceClientFactory.GetInvoiceClient(System.String)">
-            <summary>
-            Returns an invoice client based on provider code
-            </summary>
-        </member>
         <member name="M:Invoicing.Api.RestClients.Myob.MyobClient.GetInvoiceSummaryFromDateAsync(System.Int32,System.DateTime)">
             <summary>
             Get all MYOB invoices for companyId from date

@@ -23,11 +23,11 @@ namespace Invoicing.Api.Controllers
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
         private readonly ICompanyProviderRepository _repository;
-        private readonly IInvoiceClientFactory _invoiceClientFactory;
+        private readonly Func<string, IInvoiceClient> _invoiceClientFactory;
 
         public InvoiceHealthController(
-            ICompanyProviderRepository repository, 
-            IInvoiceClientFactory invoiceClientFactory,
+            ICompanyProviderRepository repository,
+            Func<string, IInvoiceClient> invoiceClientFactory,
             IMapper mapper, 
             IConfiguration configuration)
         {
@@ -50,7 +50,7 @@ namespace Invoicing.Api.Controllers
             var companyProvider = await _repository.SingleOrDefaultAsync(x => x.Provider, y => y.CompanyId == customerId).ConfigureAwait(false);
             if (companyProvider == null) throw new BaseException($"Provider not found for customerId: {customerId}");
             // Use factory to get the required invoice client for the provider code
-            var invoiceClient = _invoiceClientFactory.GetInvoiceClient(companyProvider.Provider.ProviderCode);
+            var invoiceClient = _invoiceClientFactory(companyProvider.Provider.ProviderCode);
 
             // Get an invoice summary via the customers 3rd party provider for a date period
             var fromDate = DateTime.Today.AddMonths(-Convert.ToInt32(_configuration["InvoicePeriodMonths"]));

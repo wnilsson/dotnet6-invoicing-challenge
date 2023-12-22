@@ -19,7 +19,7 @@ namespace Invoicing.Test.Controllers
     [TestFixture]
     public class InvoiceHealthControllerTests
     {
-        private readonly IInvoiceClientFactory _factory;
+        private readonly Func<string, IInvoiceClient> _factory;
         private readonly ICompanyProviderRepository _repository;
         private readonly IConfiguration _configuration;
 
@@ -35,10 +35,11 @@ namespace Invoicing.Test.Controllers
             var mockInvoiceClient = new Mock<IInvoiceClient>();
             mockInvoiceClient.Setup(x => x.GetInvoiceSummaryFromDateAsync(1, TestHelper.FromDate))
                 .Returns(Task.Run(TestHelper.GetInvoices));
-            var serviceProvider = new Mock<IServiceProvider>();
-            serviceProvider.Setup(x => x.GetService(typeof(XeroClient))).Returns(mockInvoiceClient.Object);
-            _factory = new InvoiceClientFactory(serviceProvider.Object);
-
+            
+            var mockFactory = new Mock<Func<string, IInvoiceClient>>();
+            mockFactory.Setup(x => x("XERO")).Returns(mockInvoiceClient.Object);
+            _factory = mockFactory.Object;
+            
             // Arrange config
             var mockConfig = new Mock<IConfiguration>();
             mockConfig.Setup(x => x["InvoicePeriodMonths"]).Returns(TestHelper.InvoicePeriodMonths.ToString);

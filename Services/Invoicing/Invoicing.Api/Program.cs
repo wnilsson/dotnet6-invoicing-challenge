@@ -77,10 +77,10 @@ namespace Invoicing.Api
 
             // Add functional
             builder.Services.AddScoped<ICompanyProviderRepository, CompanyProviderRepository>();
-            builder.Services.AddScoped<IInvoiceClientFactory, InvoiceClientFactory>();
-            builder.Services.AddScoped<XeroClient>().AddScoped<IInvoiceClient, XeroClient>(s => s.GetRequiredService<XeroClient>());
-            builder.Services.AddScoped<MyobClient>().AddScoped<IInvoiceClient, MyobClient>(s => s.GetRequiredService<MyobClient>());
-            
+            builder.Services.AddScoped<XeroClient, XeroClient>();
+            builder.Services.AddScoped<MyobClient, MyobClient>();
+            builder.Services.AddScoped(InvoiceClientImplementationFactory);
+
             // Build the app and expose web app members
             var app = builder.Build();
     
@@ -120,6 +120,24 @@ namespace Invoicing.Api
 
             // Start the app
             app.Run();
+        }
+
+        private static Func<string, IInvoiceClient> InvoiceClientImplementationFactory(IServiceProvider serviceProvider)
+        {
+            return GetInvoiceClient;
+
+            IInvoiceClient GetInvoiceClient(string providerCode)
+            {
+                switch (providerCode)
+                {
+                    case "XERO":
+                        return serviceProvider.GetService(typeof(XeroClient)) as IInvoiceClient;
+                    case "MYOB":
+                        return serviceProvider.GetService(typeof(MyobClient)) as IInvoiceClient;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
         }
     }
 }
